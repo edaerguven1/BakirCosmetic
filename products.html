@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koleksiyonlar | Bakır Cosmetic</title>
+    <meta name="description" content="Profesyonel kuaför ürünleri kataloğu. Boya, bakım ve teknik ekipmanlar.">
+
+    <!-- Fonts & CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Header (Same as Index) -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                BAKIR <span class="text-copper">COSMETIC</span>
+            </a>
+
+            <nav class="desktop-nav">
+                <a href="index.html">Ana Sayfa</a>
+                <a href="about.html">Kurumsal</a>
+                <a href="products.html" class="active-link">Koleksiyon</a>
+                <a href="studio.html">Studio Bakır</a>
+                <a href="contact.html">İletişim</a>
+
+            </nav>
+
+            <button class="burger-menu" aria-label="Menu">
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <nav class="mobile-nav">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="about.html">Kurumsal</a>
+            <a href="products.html">Koleksiyon</a>
+            <a href="studio.html">Salon Tasarımı</a>
+            <a href="contact.html">İletişim</a>
+            <a href="catalogs.html" class="mobile-cta">E-Kataloglar</a>
+        </nav>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="header-bg">
+            <img src="assets/images/products-header.jpg" alt="Koleksiyon">
+            <div class="overlay"></div>
+        </div>
+        <div class="container">
+            <h1>KOLEKSİYON</h1>
+            <p>Profesyoneller için seçilmiş premium ürün gamı.</p>
+        </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <section class="catalog-section">
+        <div class="container layout-grid">
+
+            <!-- Mobile Filter Toggle -->
+            <button class="filter-toggle-btn" id="filter-toggle">
+                <i class="fa-solid fa-filter"></i> FİLTRELE / KATEGORİLER
+            </button>
+
+            <!-- Sidebar Filters -->
+            <div class="sidebar-container">
+                <!-- Search Input -->
+                <div class="search-box">
+                    <input type="text" id="product-search" placeholder="Ürün veya marka ara...">
+                    <i class="fa-solid fa-search"></i>
+                </div>
+
+                <aside class="sidebar" id="product-sidebar">
+                    <button class="close-sidebar-btn" id="close-sidebar">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+
+                    <div class="filter-group">
+                        <h3>KATEGORİLER</h3>
+                        <div class="filter-tree" id="category-filters">
+                            <!-- All -->
+                            <button class="tree-item active" data-filter="all">Tümü</button>
+
+                            <!-- Group: Renklendirme -->
+                            <div class="tree-group">
+                                <button class="group-header" data-group="color,hair-dye,bleach,oxidant,spray-dye">Saç
+                                    Renklendirme</button>
+                                <div class="tree-children">
+                                    <button data-filter="hair-dye">Saç Boyaları</button>
+                                    <button data-filter="bleach">Saç Açıcılar</button>
+                                    <button data-filter="oxidant">Oksidanlar</button>
+                                    <button data-filter="spray-dye">Sprey Boya & Wax</button>
+                                </div>
+                            </div>
+
+                            <!-- Group: Şekillendirme -->
+                            <div class="tree-group">
+                                <button class="group-header" data-group="styling,styling-spray,foam,wax-gel">Saç
+                                    Şekillendirme</button>
+                                <div class="tree-children">
+                                    <button data-filter="styling-spray">Spreyler</button>
+                                    <button data-filter="foam">Köpükler</button>
+                                    <button data-filter="wax-gel">Wax & Jöle</button>
+                                </div>
+                            </div>
+
+                            <!-- Group: Bakım -->
+                            <div class="tree-group">
+                                <button class="group-header"
+                                    data-group="care,shampoo,conditioner,mask,blow-dry-water,dry-shampoo,care-oil,tonic,serum,protein-care">Saç
+                                    Bakım</button>
+                                <div class="tree-children">
+                                    <button data-filter="shampoo">Şampuanlar</button>
+                                    <button data-filter="conditioner">Saç Kremleri</button>
+                                    <button data-filter="mask">Saç Maskeleri</button>
+                                    <button data-filter="blow-dry-water">Fön Suları</button>
+                                    <button data-filter="dry-shampoo">Kuru Şampuanlar</button>
+                                    <button data-filter="care-oil">Bakım Yağları</button>
+                                    <button data-filter="tonic">Tonikler</button>
+                                    <button data-filter="serum">Serumlar</button>
+                                    <button data-filter="protein-care">Protein Bakım</button>
+                                </div>
+                            </div>
+
+                            <!-- Group: Erkek -->
+                            <div class="tree-group">
+                                <button class="group-header"
+                                    data-group="men-hair-care,beard-care,skin-care,men-hair-dye,men-perfume">Erkek
+                                    Bakım</button>
+                                <div class="tree-children">
+                                    <button data-filter="men-hair-care">Saç Bakım</button>
+                                    <button data-filter="beard-care">Sakal Bakım</button>
+                                    <button data-filter="skin-care">Cilt Bakım</button>
+                                    <button data-filter="men-hair-dye">Saç Boyaları</button>
+                                </div>
+                            </div>
+
+                            <!-- Group: Kişisel -->
+                            <div class="tree-group">
+                                <button class="group-header" data-group="perfume,lotion,cleanser">Kişisel Bakım</button>
+                                <div class="tree-children">
+                                    <button data-filter="perfume">Parfüm</button>
+                                    <button data-filter="lotion">Losyonlar</button>
+                                    <button data-filter="cleanser">Temizleyiciler</button>
+                                </div>
+                            </div>
+
+                            <!-- Group: Aksesuarlar -->
+                            <div class="tree-group">
+                                <button class="group-header"
+                                    data-group="tech,furniture,hair-accessories">Aksesuarlar</button>
+                                <div class="tree-children">
+                                    <button data-filter="hair-accessories">Saç Aksesuarları</button>
+                                    <button data-filter="tech">Teknik Cihazlar</button>
+                                    <button data-filter="furniture">Demirbaş</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>MARKALAR</h3>
+                        <div class="filter-tree" id="brand-filters">
+                            <button class="tree-item active" data-brand="all">Tümü</button>
+                            <button class="tree-item" data-brand="Schwarzkopf">Schwarzkopf</button>
+                            <button class="tree-item" data-brand="L'Oreal">L'Oreal</button>
+                            <button class="tree-item" data-brand="Wella">Wella</button>
+                            <button class="tree-item" data-brand="Davines">Davines</button>
+                            <button class="tree-item" data-brand="Dyson">Dyson</button>
+                            <button class="tree-item" data-brand="Morfose">Morfose</button>
+                            <button class="tree-item" data-brand="Bakır Design">Bakır Design</button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="catalog-content">
+                <div class="products-grid-container" id="product-container">
+                    <!-- Products will be injected here via JS -->
+                    <div class="loading-skeleton"></div>
+                    <div class="loading-skeleton"></div>
+                    <div class="loading-skeleton"></div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination-container" id="pagination-controls">
+                    <!-- Buttons injected via JS -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <a href="index.html" class="footer-logo">BAKIR COSMETIC</a>
+                    <p>Güzelliğin profesyonel mimarı. Toptan satış ve proje çözümleri.</p>
+                    <div class="socials">
+                        <a href="https://www.instagram.com/bakircozmetic/" target="_blank"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/905321750818" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Hızlı Erişim</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="about.html">Kurumsal</a></li>
+                        <li><a href="products.html">Koleksiyon</a></li>
+                        <li><a href="studio.html">Mimari Projeler</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Müşteri Hizmetleri</h4>
+                    <ul>
+
+                        <li><a href="catalogs.html">E-Katalog İndir</a></li>
+                        <li><a href="contact.html">Keşif Talep Formu</a></li>
+                        <li><a href="contact.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <p>Ertuğrul Gazi, 330. Sk., 63300 Merkez/Şanlıurfa</p>
+                    <p class="contact-highlight">0532 175 08 18</p>
+                    <p>info@bakircosmetic.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bakır Cosmetic. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="cursor.js"></script>
+    <script src="data/products_db.js?v=2"></script>
+    <script src="main.js?v=1"></script>
+    <script>
+        // Inline script to initialize product loader (or move to main.js)
+        document.addEventListener('DOMContentLoaded', () => {
+            // We will add the loadProducts function to main.js, 
+            // but calling it here ensures it runs for this page.
+            if (window.initProductCatalog) {
+                window.initProductCatalog();
+            }
+        });
+    </script>
+</body>
+
+</html>

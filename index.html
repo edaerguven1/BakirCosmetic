@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakır Cosmetic | Profesyonel Kuaför Tedarik & Salon Tasarımı</title>
+    <meta name="description"
+        content="Global markaların toptan satışı ve anahtar teslim lüks kuaför salonu tasarımları. Estetik ve fonksiyonelliğin buluşma noktası.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="#" class="logo">
+                BAKIR <span class="text-copper">COSMETIC</span>
+            </a>
+
+            <nav class="desktop-nav">
+                <a href="index.html" class="active-link">Ana Sayfa</a>
+                <a href="about.html">Kurumsal</a>
+                <a href="products.html">Koleksiyon</a>
+                <a href="studio.html">Studio Bakır</a>
+                <a href="contact.html">İletişim</a>
+
+            </nav>
+
+            <button class="burger-menu" aria-label="Menu">
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <nav class="mobile-nav">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="about.html">Kurumsal</a>
+            <a href="products.html">Koleksiyon</a>
+            <a href="studio.html">Salon Tasarımı</a>
+            <a href="contact.html">İletişim</a>
+            <a href="catalogs.html" class="mobile-cta">E-Kataloglar</a>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <!-- 3D Grid Canvas will be injected here by hero-3d.js -->
+            <!-- Previous Video Background:
+            <video autoplay muted loop playsinline poster="...">
+                <source src="assets/videos/studio-header3.mp4" type="video/mp4">
+            </video> 
+            -->
+            <div class="overlay"></div>
+        </div>
+
+        <div class="container hero-content">
+            <h1 class="hero-title">
+                <span class="reveal-text">SALONUNUZUN</span>
+                <span class="reveal-text text-copper">MİMARI</span>
+            </h1>
+            <p class="hero-subtitle">Profesyonel ürünler ve eşsiz salon tasarımları ile sanatınızı zirveye taşıyın.</p>
+
+            <div class="hero-actions">
+                <a href="products.html" class="btn btn-copper">Koleksiyonu Keşfet</a>
+                <a href="#studio" class="btn btn-transparent">Tasarım Hizmetleri</a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- Brand Ticker -->
+    <div class="brand-ticker">
+        <div class="ticker-track">
+            <!-- Repeated logos for infinite scroll effect (Placeholders) -->
+            <div class="brand-item">L'OREAL</div>
+            <div class="brand-item">SCHWARZKOPF</div>
+            <div class="brand-item">WELLA</div>
+            <div class="brand-item">DAVINES</div>
+            <div class="brand-item">KERASTASE</div>
+            <div class="brand-item">OLAPLEX</div>
+            <!-- Duplicate for seamless loop -->
+            <div class="brand-item">L'OREAL</div>
+            <div class="brand-item">SCHWARZKOPF</div>
+            <div class="brand-item">WELLA</div>
+            <div class="brand-item">DAVINES</div>
+            <div class="brand-item">KERASTASE</div>
+            <div class="brand-item">OLAPLEX</div>
+            <div class="brand-item">L'OREAL</div>
+            <div class="brand-item">SCHWARZKOPF</div>
+            <div class="brand-item">WELLA</div>
+            <div class="brand-item">DAVINES</div>
+            <div class="brand-item">KERASTASE</div>
+            <div class="brand-item">OLAPLEX</div>
+        </div>
+    </div>
+
+    <!-- Dual Service Section -->
+    <section class="split-section" id="about">
+        <div class="split-side left-side">
+            <div class="content">
+                <h2>Profesyonel Tedarik</h2>
+                <p>Global markaların en yeni serileri, teknik ekipmanlar ve sarf malzemeleri. Eksiksiz lojistik ağı.</p>
+                <a href="#products" class="link-arrow">Ürünleri İncele <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="bg-image" style="background-image: url('assets/images/supply-bg.jpg');"></div>
+        </div>
+        <div class="split-side right-side">
+            <div class="content">
+                <h2>Mimari & Tasarım</h2>
+                <p>Müşteri deneyimini dönüştüren lüks salon tasarımları. 3D modellemeden anahtar teslim uygulamaya.</p>
+                <a href="#studio" class="link-arrow">Projelerimiz <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="bg-image" style="background-image: url('assets/images/design-bg.jpg');"></div>
+        </div>
+    </section>
+
+    <!-- Studio / Luxury Sticky Scroll Experience (Teaser) -->
+    <section id="studio" class="studio-sticky-section">
+        <div class="sticky-wrapper">
+            <!-- Left Side (Sticky) -->
+            <div class="sticky-left">
+                <span class="label">TASARIM SÜRECİMİZ</span>
+                <h2>Güzelliği<br><span style="color:var(--color-champagne)">İnşa Ediyoruz</span></h2>
+                <div style="margin-top:40px;">
+                    <a href="studio.html" class="btn btn-outline"
+                        style="border-color:var(--color-champagne); color:var(--color-champagne);">TÜM SÜRECİ İNCELE</a>
+                </div>
+            </div>
+
+            <!-- Right Side (Scrollable Panels) -->
+            <div class="sticky-right">
+                <!-- Step 01 -->
+                <div class="luxury-panel reveal-card">
+                    <span class="step-num">01</span>
+                    <h3>Konsept Mimari</h3>
+                    <p>Salonunuzun ruhunu yansıtan özgün bir karakter oluşturuyoruz. Renk paletinden malzeme seçimine
+                        kadar her detay titizlikle tasarlanır.</p>
+                </div>
+
+                <!-- Step 02 -->
+                <div class="luxury-panel reveal-card">
+                    <span class="step-num">02</span>
+                    <h3>3D Modelleme</h3>
+                    <p>En gelişmiş tekniklerle, hayalinizdeki salonu henüz inşa edilmeden önce fotogerçekçi kalitede
+                        deneyimlemenizi sağlıyoruz.</p>
+                </div>
+
+                <!-- Step 03 -->
+                <div class="luxury-panel reveal-card">
+                    <span class="step-num">03</span>
+                    <h3>Anahtar Teslim</h3>
+                    <p>Mobilyadan aydınlatmaya, inşaattan ince işçiliğe kadar tüm süreci profesyonel ekiplerimizle
+                        yönetiyoruz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Ring Carousel (Studio Projects) -->
+    <!-- 3D Ring Carousel (Studio Projects) -->
+    <section class="carousel-3d-section">
+        <div class="container" style="max-width:1200px; margin:0 auto; padding:0 20px;">
+            <div class="section-header">
+                <span class="label">STUDIO PROJELERİMİZ</span>
+                <h2>3B Tasarım Vizyonu</h2>
+            </div>
+
+            <div class="carousel-3d-container">
+                <!-- Main Scene -->
+                <div class="carousel-3d-scene" id="carousel3dScene">
+                    <div class="carousel-3d-ring" id="carousel3dRing">
+                        <div class="carousel-3d-item" data-name="Modern Loft" data-sub="İstanbul, Maslak">
+                            <img src="assets/images/studio-after.jpg" alt="Modern Loft">
+                        </div>
+                        <div class="carousel-3d-item" data-name="Bakır Esintisi" data-sub="İzmir, Alsancak">
+                            <img src="assets/images/design-bg.jpg" alt="Bakır Esintisi">
+                        </div>
+                        <div class="carousel-3d-item" data-name="Minimalist Gold" data-sub="Bodrum, Yalıkavak">
+                            <img src="assets/images/studio-after.jpg" alt="Minimalist Gold">
+                        </div>
+                        <div class="carousel-3d-item" data-name="VIP Studio" data-sub="Ankara, Çankaya">
+                            <img src="assets/images/design-bg.jpg" alt="VIP Studio">
+                        </div>
+                        <div class="carousel-3d-item" data-name="Industrial Chic" data-sub="İstanbul, Karaköy">
+                            <img src="assets/images/studio-after.jpg" alt="Industrial Chic">
+                        </div>
+                        <div class="carousel-3d-item" data-name="Klasik Dokunuş" data-sub="Şanlıurfa, Merkez">
+                            <img src="assets/images/design-bg.jpg" alt="Klasik Dokunuş">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Holder -->
+                <div id="carousel-info">
+                    <span id="carousel-info-name"></span>
+                    <span id="carousel-info-sub"></span>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="carousel3dPrev"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="carousel-btn" id="carousel3dNext"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Categories Preview (Renamed) -->
+    <section id="products" class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="label">ÜRÜN GRUPLARI</span>
+                <h2>İhtiyacınız Olan Her Şey</h2>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="p-image">
+                        <img src="assets/images/cat-color.jpg" alt="Saç Boyaları">
+                    </div>
+                    <div class="p-info">
+                        <h3>Renklendirme</h3>
+                        <p>Profesyonel tüp boyalar ve açıcılar.</p>
+                        <a href="products.html?category=color">Keşfet</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="p-image">
+                        <img src="assets/images/cat-care.jpg" alt="Bakım Ürünleri">
+                    </div>
+                    <div class="p-info">
+                        <h3>Saç Bakımı</h3>
+                        <p>Şampuan, maske ve bakım kürleri.</p>
+                        <a href="products.html?category=care">Keşfet</a>
+                    </div>
+                </div>
+                <!-- Updated Image for Styling to match others style if needed, keeping placeholder -->
+                <div class="product-card">
+                    <div class="p-image">
+                        <img src="assets/images/cat-styling.jpg" alt="Şekillendirme">
+                    </div>
+                    <div class="p-info">
+                        <h3>Şekillendirme</h3>
+                        <p>Spreyler, jöleler ve waxlar.</p>
+                        <a href="products.html?category=styling">Keşfet</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="p-image">
+                        <img src="assets/images/cat-tech.jpg" alt="Teknik Ekipman">
+                    </div>
+                    <div class="p-info">
+                        <h3>Demirbaş & Teknik</h3>
+                        <p>Makaslar, fön makineleri, koltuklar.</p>
+                        <a href="products.html?category=tech">Keşfet</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:50px;">
+                <a href="products.html" class="btn btn-outline"
+                    style="border-color:var(--color-copper); color:var(--color-copper);">TÜM ÜRÜNLERİ GÖR</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stats-item" data-target="1978" data-label="Kuruluş Yılı">
+                <div class="stats-number">
+                    <span class="stats-count">0</span>
+                </div>
+                <div class="stats-divider"></div>
+                <p class="stats-label">Kuruluş Yılı</p>
+            </div>
+            <div class="stats-item" data-target="500" data-suffix="+" data-label="Ürün Çeşidi">
+                <div class="stats-number">
+                    <span class="stats-count">0</span><span class="stats-suffix">+</span>
+                </div>
+                <div class="stats-divider"></div>
+                <p class="stats-label">Ürün Çeşidi</p>
+            </div>
+            <div class="stats-item" data-target="150" data-suffix="+" data-label="Salonlar">
+                <div class="stats-number">
+                    <span class="stats-count">0</span><span class="stats-suffix">+</span>
+                </div>
+                <div class="stats-divider"></div>
+                <p class="stats-label">Salonlar</p>
+            </div>
+            <div class="stats-item" data-target="98" data-suffix="%" data-label="Müşteri Memnuniyeti">
+                <div class="stats-number">
+                    <span class="stats-count">0</span><span class="stats-suffix">%</span>
+                </div>
+                <div class="stats-divider"></div>
+                <p class="stats-label">Müşteri Memnuniyeti</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <a href="index.html" class="footer-logo">BAKIR COSMETIC</a>
+                    <p>Güzelliğin profesyonel mimarı. Toptan satış ve proje çözümleri.</p>
+                    <div class="socials">
+                        <a href="https://www.instagram.com/bakircozmetic/" target="_blank"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/905321750818" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Hızlı Erişim</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="about.html">Kurumsal</a></li>
+                        <li><a href="products.html">Koleksiyon</a></li>
+                        <li><a href="studio.html">Mimari Projeler</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Müşteri Hizmetleri</h4>
+                    <ul>
+
+                        <li><a href="catalogs.html">E-Katalog İndir</a></li>
+                        <li><a href="contact.html">Keşif Talep Formu</a></li>
+                        <li><a href="contact.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <p>Ertuğrul Gazi, 330. Sk., 63300 Merkez/Şanlıurfa</p>
+                    <p class="contact-highlight">0532 175 08 18</p>
+                    <p>info@bakircosmetic.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bakır Cosmetic. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="hero-3d.js"></script>
+    <script src="carousel-3d.js"></script>
+    <script src="cursor.js"></script>
+    <script src="data/products_db.js?v=1"></script>
+    <script src="main.js?v=1"></script>
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+[
+  {
+    "id": "p001",
+    "name": "Schwarzkopf Igora Royal 60ml",
+    "category": "color",
+    "brand": "Schwarzkopf",
+    "image": "assets/products/schwarzkopf/igora_royal.webp",
+    "description": "Profesyonellerin tercihi gerçek renk performansı. %100 beyaz kapama ve uzun süre kalıcılık."
+  },
+  {
+    "id": "p002",
+    "name": "L'Oreal Majirel 50ml",
+    "category": "color",
+    "brand": "L'Oreal",
+    "image": "assets/products/loreal/majirel.webp",
+    "description": "İkonik profesyonel saç boyası. Zengin, derin ve yoğun renkler."
+  },
+  {
+    "id": "p003",
+    "name": "Wella Koleston Perfect",
+    "category": "color",
+    "brand": "Wella",
+    "image": "assets/products/wella/koleston.webp",
+    "description": "Saf sonuçlar için ME+ teknolojisi ile geliştirilmiş ilk profesyonel saç boyası."
+  },
+  {
+    "id": "p004",
+    "name": "Davines Oi Oil 135ml",
+    "category": "care",
+    "brand": "Davines",
+    "image": "assets/products/davines/oi_shampoo.webp",
+    "description": "Tüm saç tipleri için mutlak güzellik iksiri. Roucou yağı içerir."
+  },
+  {
+    "id": "p005",
+    "name": "Kerastase Elixir Ultime",
+    "category": "care",
+    "brand": "Kerastase",
+    "image": "assets/products/kerastase/elixir_ultime.webp",
+    "description": "Mat saçlar için parlaklık veren ikonik saç bakım yağı."
+  },
+  {
+    "id": "p006",
+    "name": "Dyson Supersonic™ Pro",
+    "category": "tech",
+    "brand": "Dyson",
+    "image": "assets/products/tech/dyson_pro.webp",
+    "description": "Profesyonel kullanım için tasarlanmış, akıllı ısı kontrolüne sahip saç kurutma makinesi."
+  },
+  {
+    "id": "p007",
+    "name": "Ventoso V5 Silex5000",
+    "category": "tech",
+    "brand": "Ventoso",
+    "image": "https://placehold.co/600x800/222/B87333?text=Ventoso",
+    "description": "İtalyan motorlu efsanevi kuaför fön makinesi. 2500 Watt güç."
+  },
+  {
+    "id": "p008",
+    "name": "Schwarzkopf BlondMe Açıcı",
+    "category": "color",
+    "brand": "Schwarzkopf",
+    "image": "https://placehold.co/600x800/1a1a1a/B87333?text=BlondMe",
+    "description": "9 tona kadar açma performansı sağlayan premium toz açıcı."
+  },
+  {
+    "id": "p009",
+    "name": "Olaplex No.1 & No.2 Kit",
+    "category": "care",
+    "brand": "Olaplex",
+    "image": "https://placehold.co/600x800/FFF/000?text=Olaplex+Kit",
+    "description": "Salon kullanımı için bağ güçlendirici sistem. Kimyasal işlem sırasında koruma."
+  },
+  {
+    "id": "p010",
+    "name": "Jaguar Makas Seti",
+    "category": "tech",
+    "brand": "Diğer",
+    "image": "https://placehold.co/600x800/000/FFF?text=Jaguar+Scissors",
+    "description": "Alman çeliği, ergonomik tasarım profesyonel kesim makası."
+  },
+  {
+    "id": "p011",
+    "name": "Barber Koltuğu - Model X",
+    "category": "furniture",
+    "brand": "Bakır Design",
+    "image": "https://placehold.co/600x800/333/d4af37?text=Barber+Chair",
+    "description": "Hidrolik sistemli, deri kaplama lüks berber koltuğu."
+  },
+  {
+    "id": "p012",
+    "name": "Yıkama Seti - Gold Edition",
+    "category": "furniture",
+    "brand": "Bakır Design",
+    "image": "https://placehold.co/600x800/111/B87333?text=Washing+Unit",
+    "description": "Masaj özellikli, seramik başlıklı konforlu yıkama seti."
+  },
+  {
+    "id": "p013",
+    "name": "Osis+ Mess Up",
+    "category": "styling",
+    "brand": "Schwarzkopf",
+    "image": "assets/products/schwarzkopf/osis_mess_up.webp",
+    "description": "Mat bitişli şekillendirici sakız macun."
+  },
+  {
+    "id": "p014",
+    "name": "Morfose Milk Therapy Fön Suyu",
+    "category": "care",
+    "brand": "Morfose",
+    "image": "assets/products/morfose/morfose_fon_suyu.png",
+    "description": "Süt proteini ve 12 amino asit içeren çift fazlı fön suyu. Yıpranmış saçları onarır."
+  },
+  {
+    "id": "p015",
+    "name": "Morfose Keratin Fön Suyu",
+    "category": "care",
+    "brand": "Morfose",
+    "image": "https://placehold.co/600x800/222/d4af37?text=Morfose+Keratin",
+    "description": "Keratin içeren çift fazlı saç kondisyoneri. Saça yumuşaklık ve parlaklık kazandırır."
+  },
+  {
+    "id": "p016",
+    "name": "Morfose Biotin Fön Suyu",
+    "category": "care",
+    "brand": "Morfose",
+    "image": "https://placehold.co/600x800/4a2c2a/fff?text=Morfose+Biotin",
+    "description": "Biotin ile güçlendirilmiş formül. Saç dökülmelerine karşı etkili bakım."
+  }
+]

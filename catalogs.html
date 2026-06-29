@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kataloglar | Bakır Cosmetic</title>
+    <meta name="description"
+        content="En yeni ürün kataloglarımızı inceleyin ve indirin. Profesyonel kuaför ekipmanları ve kozmetik ürünleri.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ── SAYFA ZEMİNİ ── */
+        .catalogs-section {
+            padding: 180px 0 120px;
+            min-height: 80vh;
+            background: radial-gradient(circle at top right, rgba(184, 115, 51, 0.06), transparent 450px),
+                var(--color-surface);
+        }
+
+        /* ── GRID ── */
+        .catalogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 50px;
+            margin-top: 60px;
+        }
+
+        /* ── KART — perspective burada ── */
+        .catalog-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            /* 3D tilt için */
+            transform-style: preserve-3d;
+            transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+            transition: transform 0.15s ease, border-color 0.4s ease,
+                box-shadow 0.4s ease;
+            will-change: transform;
+            cursor: pointer;
+        }
+
+        /* Hover'da border ve gölge — tilt JS halleder */
+        .catalog-card.tilt-active {
+            border-color: rgba(200, 130, 26, 0.45);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(200, 130, 26, 0.12);
+        }
+
+        /* Mouse ayrılınca yumuşak dönüş */
+        .catalog-card.tilt-reset {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* ── KAPAK ── */
+        .catalog-preview {
+            height: 420px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .catalog-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .catalog-card.tilt-active .catalog-preview img {
+            transform: scale(1.06);
+        }
+
+        /* Alt karartma */
+        .catalog-preview::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 55%, rgba(0, 0, 0, 0.7));
+            z-index: 1;
+        }
+
+        /* ── HOVER OVERLAY ── */
+        .catalog-hover-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .catalog-card.tilt-active .catalog-hover-overlay {
+            opacity: 1;
+        }
+
+        .catalog-hover-overlay span {
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #c8821a;
+            border: 1px solid rgba(200, 130, 26, 0.5);
+            padding: 12px 28px;
+            border-radius: 4px;
+            background: rgba(200, 130, 26, 0.08);
+            transform: translateY(10px);
+            transition: transform 0.35s ease;
+        }
+
+        .catalog-card.tilt-active .catalog-hover-overlay span {
+            transform: translateY(0);
+        }
+
+        /* ── ALTIN IŞIK (spotlight) ── */
+        .catalog-spotlight {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            border-radius: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            /* JS günceller background */
+            background: radial-gradient(circle at 50% 50%,
+                    rgba(200, 130, 26, 0.18) 0%,
+                    transparent 65%);
+        }
+
+        .catalog-card.tilt-active .catalog-spotlight {
+            opacity: 1;
+        }
+
+        /* ── YENİ ROZETİ ── */
+        .catalog-badge {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            z-index: 5;
+            background: #c8821a;
+            color: #000;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            border-radius: 3px;
+            animation: badge-pulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes badge-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(200, 130, 26, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(200, 130, 26, 0);
+            }
+        }
+
+        /* ── ALT BİLGİ ── */
+        .catalog-info {
+            padding: 28px 30px 30px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* tilt'ten etkilenmesin diye hafif z */
+            position: relative;
+            z-index: 2;
+        }
+
+        .catalog-title {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #fff;
+            letter-spacing: 0.02em;
+        }
+
+        .catalog-meta {
+            font-size: 0.78rem;
+            color: var(--color-text-muted);
+            margin-bottom: 22px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        /* ── BUTONLAR ── */
+        .catalog-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn-elegant {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: border-color 0.3s, background 0.3s, color 0.3s, transform 0.2s;
+        }
+
+        .btn-elegant:hover {
+            border-color: var(--color-copper, #c8821a);
+            background: rgba(200, 130, 26, 0.1);
+            color: #c8821a;
+        }
+
+        .btn-elegant.primary {
+            background: #c8821a;
+            border-color: #c8821a;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .btn-elegant.primary:hover {
+            background: #fff;
+            border-color: #fff;
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        /* İndirme animasyonu */
+        .btn-elegant.primary.downloading {
+            background: #333;
+            border-color: #555;
+            color: #c8821a;
+            pointer-events: none;
+        }
+
+        .btn-elegant.primary.downloaded {
+            background: #1a4a1a;
+            border-color: #2d7a2d;
+            color: #4caf50;
+            pointer-events: none;
+        }
+
+        /* ── REVEAL ANIMASYONU ── */
+        .reveal-card {
+            opacity: 0;
+            transform: perspective(900px) translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-card.visible {
+            opacity: 1;
+            transform: perspective(900px) translateY(0);
+        }
+
+        /* Sıralı gecikme */
+        .reveal-card:nth-child(1) {
+            transition-delay: 0s;
+        }
+
+        .reveal-card:nth-child(2) {
+            transition-delay: 0.12s;
+        }
+
+        .reveal-card:nth-child(3) {
+            transition-delay: 0.24s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">BAKIR <span class="text-copper">COSMETIC</span></a>
+            <nav class="desktop-nav">
+                <a href="index.html">Ana Sayfa</a>
+                <a href="about.html">Kurumsal</a>
+                <a href="products.html">Koleksiyon</a>
+                <a href="studio.html">Studio Bakır</a>
+                <a href="contact.html">İletişim</a>
+            </nav>
+            <button class="burger-menu" aria-label="Menu"><span></span><span></span></button>
+        </div>
+    </header>
+
+    <div class="mobile-menu-overlay">
+        <nav class="mobile-nav">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="about.html">Kurumsal</a>
+            <a href="products.html">Koleksiyon</a>
+            <a href="studio.html">Salon Tasarımı</a>
+            <a href="contact.html">İletişim</a>
+            <a href="catalogs.html" class="mobile-cta">E-Kataloglar</a>
+        </nav>
+    </div>
+
+    <!-- ── ANA İÇERİK ── -->
+    <section class="catalogs-section">
+        <div class="container">
+            <div class="section-header center-text">
+                <span class="label">DİJİTAL KÜTÜPHANE</span>
+                <h2>E-Kataloglar</h2>
+                <p>En güncel ürün koleksiyonlarımızı ve tasarım portfolyomuzu dijital olarak inceleyin.</p>
+            </div>
+
+            <div class="catalogs-grid">
+
+                <!-- Kart 1 -->
+                <div class="catalog-card reveal-card">
+                    <div class="catalog-spotlight"></div>
+                    <span class="catalog-badge">2025 YENİ</span>
+                    <div class="catalog-preview">
+                        <img src="assets/catalogs/aldimed.jpeg" alt="2025 Genel Ürün Kataloğu">
+                        <div class="catalog-hover-overlay">
+                            <span>Kataloğu İncele →</span>
+                        </div>
+                    </div>
+                    <div class="catalog-info">
+                        <div>
+                            <h3 class="catalog-title">2025 Genel Ürün Kataloğu</h3>
+                            <p class="catalog-meta">Digital PDF • 6.5 MB</p>
+                        </div>
+                        <div class="catalog-actions">
+
+                            <a href="assets/catalogs/final katalog v2_compressed.pdf" download
+                                class="btn-elegant primary download-btn">
+                                İndir <i class="fa-solid fa-arrow-down-long"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 2 -->
+                <div class="catalog-card reveal-card">
+                    <div class="catalog-spotlight"></div>
+                    <div class="catalog-preview">
+                        <img src="assets/catalogs/morfose.jpg" alt="Morfose Ürün Kataloğu">
+                        <div class="catalog-hover-overlay">
+                            <span>Kataloğu İncele →</span>
+                        </div>
+                    </div>
+                    <div class="catalog-info">
+                        <div>
+                            <h3 class="catalog-title">Morfose Ürün Kataloğu</h3>
+                            <p class="catalog-meta">Digital PDF • 24.3 MB</p>
+                        </div>
+                        <div class="catalog-actions">
+                            <a href="assets/catalogs/Morfose_Catalog.pdf" download
+                                class="btn-elegant primary download-btn">
+                                İndir <i class="fa-solid fa-arrow-down-long"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 3 -->
+                <div class="catalog-card reveal-card">
+                    <div class="catalog-spotlight"></div>
+                    <div class="catalog-preview">
+                        <img src="assets/catalogs/goldblocker.jpeg" alt="Gold Blocker Ürün Kataloğu">
+                        <div class="catalog-hover-overlay">
+                            <span>Kataloğu İncele →</span>
+                        </div>
+                    </div>
+                    <div class="catalog-info">
+                        <div>
+                            <h3 class="catalog-title">Gold Blocker Ürün Kataloğu</h3>
+                            <p class="catalog-meta">Digital PDF • 24.3 MB</p>
+                        </div>
+                        <div class="catalog-actions">
+                            <a href="assets/catalogs/goldblocker.pdf" download class="btn-elegant primary download-btn">
+                                İndir <i class="fa-solid fa-arrow-down-long"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <a href="index.html" class="footer-logo">BAKIR COSMETIC</a>
+                    <p>Güzelliğin profesyonel mimarı. Toptan satış ve proje çözümleri.</p>
+                    <div class="socials">
+                        <a href="https://www.instagram.com/bakircozmetic/" target="_blank"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/905321750818" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Hızlı Erişim</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="about.html">Kurumsal</a></li>
+                        <li><a href="products.html">Koleksiyon</a></li>
+                        <li><a href="studio.html">Mimari Projeler</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Müşteri Hizmetleri</h4>
+                    <ul>
+                        <li><a href="catalogs.html">E-Katalog İndir</a></li>
+                        <li><a href="contact.html">Keşif Talep Formu</a></li>
+                        <li><a href="contact.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <p>Ertuğrul Gazi, 330. Sk., 63300 Merkez/Şanlıurfa</p>
+                    <p class="contact-highlight">0532 175 08 18</p>
+                    <p>info@bakircosmetic.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bakır Cosmetic. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cursor.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        /* =============================================
+           KATALOG EFEKTLERİ
+           ============================================= */
+        (function () {
+
+            /* ── 1. REVEAL (scroll ile kartlar belirir) ── */
+            const revealCards = document.querySelectorAll('.reveal-card');
+            const revealObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            revealCards.forEach(c => revealObserver.observe(c));
+
+
+            /* ── 2. 3D TILT + ALTIN SPOTLIGHT ── */
+            const cards = document.querySelectorAll('.catalog-card');
+
+            cards.forEach(card => {
+                const spotlight = card.querySelector('.catalog-spotlight');
+
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const cx = rect.left + rect.width / 2;
+                    const cy = rect.top + rect.height / 2;
+                    const dx = e.clientX - cx;
+                    const dy = e.clientY - cy;
+
+                    /* Maksimum eğim: ±12 derece */
+                    const rotY = (dx / rect.width) * 12;
+                    const rotX = -(dy / rect.height) * 12;
+
+                    card.classList.remove('tilt-reset');
+                    card.classList.add('tilt-active');
+                    card.style.transform =
+                        `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.03,1.03,1.03)`;
+
+                    /* Spotlight pozisyonu */
+                    const px = ((e.clientX - rect.left) / rect.width) * 100;
+                    const py = ((e.clientY - rect.top) / rect.height) * 100;
+                    if (spotlight) {
+                        spotlight.style.background =
+                            `radial-gradient(circle at ${px}% ${py}%,
+                            rgba(200,130,26,0.22) 0%,
+                            rgba(200,130,26,0.06) 35%,
+                            transparent 65%)`;
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('tilt-active');
+                    card.classList.add('tilt-reset');
+                    card.style.transform =
+                        'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+                    if (spotlight) spotlight.style.background = '';
+                });
+            });
+
+
+            /* ── 3. İNDİR BUTONU ANİMASYONU ── */
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    if (this.classList.contains('downloading') ||
+                        this.classList.contains('downloaded')) return;
+
+                    const original = this.innerHTML;
+                    this.classList.add('downloading');
+                    this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> İndiriliyor...';
+
+                    setTimeout(() => {
+                        this.classList.remove('downloading');
+                        this.classList.add('downloaded');
+                        this.innerHTML = '<i class="fa-solid fa-check"></i> İndirildi';
+
+                        setTimeout(() => {
+                            this.classList.remove('downloaded');
+                            this.innerHTML = original;
+                        }, 3000);
+                    }, 1800);
+                });
+            });
+
+        })();
+    </script>
+
+</body>
+
+</html>

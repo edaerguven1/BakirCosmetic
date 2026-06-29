@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim | Bakır Cosmetic</title>
+    <meta name="description" content="Bakır Cosmetic iletişim bilgileri, adres ve randevu talep formu.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ═══════════════════════════════════════
+           CONTACT SECTION
+        ═══════════════════════════════════════ */
+        .contact-section {
+            padding: 110px 0 120px;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Arka plan ambient */
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(200, 130, 26, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(200, 130, 26, 0.03) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        /* ── Grid ── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        /* ── Sol: Bilgi + Form ── */
+        .contact-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .contact-left.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* İletişim bilgi kartları */
+        .info-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 50px;
+        }
+
+        .info-card {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding: 22px 26px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+            cursor: default;
+        }
+
+        .info-card:hover {
+            background: rgba(200, 130, 26, 0.05);
+            border-color: rgba(200, 130, 26, 0.25);
+            transform: translateX(6px);
+        }
+
+        /* İkon kutusu */
+        .info-icon {
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(200, 130, 26, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: border-color 0.35s, background 0.35s;
+            position: relative;
+        }
+
+        .info-card:hover .info-icon {
+            border-color: #c8821a;
+            background: rgba(200, 130, 26, 0.1);
+        }
+
+        /* Pulse halkası */
+        .info-icon::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 1px solid rgba(200, 130, 26, 0);
+            transition: border-color 0.35s, inset 0.35s;
+        }
+
+        .info-card:hover .info-icon::after {
+            border-color: rgba(200, 130, 26, 0.2);
+            inset: -8px;
+        }
+
+        .info-icon i {
+            color: #c8821a;
+            font-size: 1rem;
+            transition: transform 0.35s ease;
+        }
+
+        .info-card:hover .info-icon i {
+            transform: scale(1.2);
+        }
+
+        .info-text .info-label {
+            display: block;
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(200, 130, 26, 0.7);
+            margin-bottom: 4px;
+        }
+
+        .info-text h3 {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 1rem;
+            color: #fff;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+
+        .info-text a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .info-text a:hover {
+            color: #c8821a;
+        }
+
+        /* Sosyal medya */
+        .contact-socials {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .social-btn {
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: border-color 0.3s, color 0.3s, background 0.3s, transform 0.3s;
+        }
+
+        .social-btn:hover {
+            border-color: #c8821a;
+            color: #c8821a;
+            background: rgba(200, 130, 26, 0.08);
+            transform: translateY(-3px);
+        }
+
+        /* ── FORM ── */
+        .contact-form-wrap {
+            margin-top: 44px;
+        }
+
+        .form-title {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 1.1rem;
+            color: #fff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* Form grubu — animasyonlu label */
+        .fg {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .fg input,
+        .fg textarea {
+            width: 100%;
+            padding: 18px 16px 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            color: #fff;
+            font-family: var(--font-body, 'Manrope', sans-serif);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.35s ease, background 0.35s ease;
+            resize: none;
+        }
+
+        .fg textarea {
+            height: 130px;
+            padding-top: 22px;
+        }
+
+        .fg input:focus,
+        .fg textarea:focus {
+            border-color: rgba(200, 130, 26, 0.5);
+            background: rgba(200, 130, 26, 0.03);
+        }
+
+        /* Floating label */
+        .fg label {
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            transform: translateY(-50%);
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+            transition: top 0.25s ease, font-size 0.25s ease, color 0.25s ease;
+        }
+
+        .fg.textarea-fg label {
+            top: 20px;
+            transform: none;
+        }
+
+        .fg input:focus~label,
+        .fg input:not(:placeholder-shown)~label,
+        .fg textarea:focus~label,
+        .fg textarea:not(:placeholder-shown)~label {
+            top: 8px;
+            font-size: 0.7rem;
+            color: #c8821a;
+            transform: none;
+        }
+
+        /* Animasyonlu alt çizgi */
+        .fg-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 0;
+            background: linear-gradient(to right, #c8821a, rgba(200, 130, 26, 0.3));
+            border-radius: 0 0 4px 4px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fg input:focus~.fg-line,
+        .fg textarea:focus~.fg-line {
+            width: 100%;
+        }
+
+        /* Gönder butonu */
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: #c8821a;
+            border: none;
+            color: #000;
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover {
+            background: #d9921e;
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        /* Ripple */
+        .btn-submit .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-anim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Başarı mesajı */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            border: 1px solid rgba(200, 130, 26, 0.3);
+            background: rgba(200, 130, 26, 0.05);
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .form-success i {
+            font-size: 2rem;
+            color: #c8821a;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .form-success p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* ── Sağ: Harita ── */
+        .contact-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+            position: sticky;
+            top: 120px;
+        }
+
+        .contact-right.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .map-label {
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: #c8821a;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .map-wrap {
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        /* Harita overlay — hover'da kalkar */
+        .map-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .map-wrap:hover .map-overlay {
+            opacity: 0;
+        }
+
+        .map-overlay span {
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 20px;
+            border-radius: 3px;
+        }
+
+        .map-wrap iframe {
+            display: block;
+            width: 100%;
+            height: 320px;
+            border: 0;
+            filter: grayscale(100%) invert(92%) contrast(83%);
+            transition: filter 0.4s ease;
+        }
+
+        .map-wrap:hover iframe {
+            filter: grayscale(60%) invert(92%) contrast(83%);
+        }
+
+        /* Adres kutusu haritanın altında */
+        .map-address {
+            margin-top: 2px;
+            padding: 20px 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: none;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .map-address i {
+            color: #c8821a;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .map-address p {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.45);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Çalışma saatleri */
+        .hours-grid {
+            margin-top: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+        }
+
+        .hour-item {
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .hour-item:hover {
+            background: rgba(200, 130, 26, 0.04);
+            border-color: rgba(200, 130, 26, 0.15);
+        }
+
+        .hour-day {
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 4px;
+        }
+
+        .hour-time {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 0.9rem;
+            color: #c8821a;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .contact-right {
+                position: static;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">BAKIR <span class="text-copper">COSMETIC</span></a>
+            <nav class="desktop-nav">
+                <a href="index.html">Ana Sayfa</a>
+                <a href="about.html">Kurumsal</a>
+                <a href="products.html">Koleksiyon</a>
+                <a href="studio.html">Studio Bakır</a>
+                <a href="contact.html" class="active-link">İletişim</a>
+            </nav>
+            <button class="burger-menu" aria-label="Menu"><span></span><span></span></button>
+        </div>
+    </header>
+
+    <div class="mobile-menu-overlay">
+        <nav class="mobile-nav">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="about.html">Kurumsal</a>
+            <a href="products.html">Koleksiyon</a>
+            <a href="studio.html">Salon Tasarımı</a>
+            <a href="contact.html">İletişim</a>
+            <a href="catalogs.html" class="mobile-cta">E-Kataloglar</a>
+        </nav>
+    </div>
+
+    <!-- Animated Gradient Hero -->
+    <section class="gradient-hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-content">
+            <span class="hero-label">İletişim</span>
+            <h1 class="hero-title">BİZE ULAŞIN</h1>
+            <div class="hero-line"></div>
+            <p class="hero-sub">Projeleriniz ve siparişleriniz için bize ulaşın</p>
+        </div>
+    </section>
+
+    <style>
+        .gradient-hero {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            overflow: hidden;
+            background: #080808;
+            margin-top: 80px;
+            /* header yüksekliği kadar */
+        }
+
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gradient-hero .hero-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            pointer-events: none;
+            text-align: center;
+            max-width: none !important;
+        }
+
+        .gradient-hero .hero-label {
+            display: block;
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 11px;
+            letter-spacing: 6px;
+            color: rgba(200, 130, 26, 0.8);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0;
+            text-align: center;
+            animation: heroFadeUp 0.9s ease 0.2s forwards;
+        }
+
+        .gradient-hero .hero-title {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: clamp(36px, 6vw, 72px);
+            color: #fff;
+            font-weight: 400;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            line-height: 1;
+            opacity: 0;
+            text-align: center;
+            animation: heroFadeUp 0.9s ease 0.45s forwards;
+        }
+
+        .gradient-hero .hero-line {
+            width: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(200, 130, 26, 0.6), transparent);
+            margin: 20px auto;
+            animation: heroLineGrow 1s ease 0.9s forwards;
+        }
+
+        .gradient-hero .hero-sub {
+            font-family: var(--font-body, 'Manrope', sans-serif);
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            opacity: 0;
+            text-align: center;
+            animation: heroFadeUp 0.9s ease 1s forwards;
+        }
+
+        @keyframes heroFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heroLineGrow {
+            to {
+                width: 140px;
+            }
+        }
+    </style>
+
+    <script>
+        /* ── Gradient Hero Canvas ── */
+        (function () {
+            const canvas = document.getElementById('hero-canvas');
+            const ctx = canvas.getContext('2d');
+            let W, H, frame = 0;
+
+            function resize() {
+                W = canvas.width = canvas.offsetWidth;
+                H = canvas.height = canvas.offsetHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            const orbs = [
+                { bx: 0.15, by: 0.5, r: 0.6, speed: 0.006, phase: 0 },
+                { bx: 0.85, by: 0.3, r: 0.5, speed: 0.009, phase: 2.1 },
+                { bx: 0.5, by: 0.85, r: 0.45, speed: 0.007, phase: 4.2 },
+                { bx: 0.3, by: 0.1, r: 0.38, speed: 0.011, phase: 1.0 },
+            ];
+
+            const C1 = [200, 130, 26];
+            const C2 = [150, 80, 10];
+
+            function draw() {
+                frame++;
+                ctx.clearRect(0, 0, W, H);
+                ctx.fillStyle = '#080808';
+                ctx.fillRect(0, 0, W, H);
+
+                orbs.forEach((o, i) => {
+                    const x = (o.bx + Math.sin(frame * o.speed + o.phase) * 0.18) * W;
+                    const y = (o.by + Math.cos(frame * o.speed * 0.7 + o.phase) * 0.22) * H;
+                    const r = o.r * Math.min(W, H);
+                    const col = i % 2 === 0 ? C1 : C2;
+                    const alpha = [0.16, 0.10, 0.07, 0.05][i];
+
+                    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+                    g.addColorStop(0, `rgba(${col},${alpha})`);
+                    g.addColorStop(0.5, `rgba(${col},${alpha * 0.3})`);
+                    g.addColorStop(1, `rgba(0,0,0,0)`);
+                    ctx.fillStyle = g;
+                    ctx.fillRect(0, 0, W, H);
+                });
+
+                /* Dalga çizgileri */
+                for (let i = 0; i < 7; i++) {
+                    const y = (H / 8) * (i + 1) + Math.sin(frame * 0.012 + i * 0.9) * 10;
+                    ctx.beginPath();
+                    ctx.moveTo(0, y); ctx.lineTo(W, y);
+                    ctx.strokeStyle = `rgba(200,130,26,${0.02 + Math.sin(frame * 0.018 + i) * 0.008})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+
+                /* Köşe aksen noktaları */
+                [[40, 40], [W - 40, 40], [40, H - 40], [W - 40, H - 40]].forEach(([x, y], i) => {
+                    const a = 0.25 + Math.sin(frame * 0.04 + i) * 0.18;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 2, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(200,130,26,${a})`;
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(draw);
+            }
+            draw();
+        })();
+    </script>
+
+    <!-- ── ANA İÇERİK ── -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+
+                <!-- SOL: BİLGİ + FORM -->
+                <div class="contact-left">
+
+                    <!-- İletişim bilgi kartları -->
+                    <div class="info-cards">
+
+                        <div class="info-card">
+                            <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="info-text">
+                                <span class="info-label">Adres</span>
+                                <h3>Ertuğrul Gazi, 330. Sk., 63300<br>Merkez / Şanlıurfa</h3>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div class="info-text">
+                                <span class="info-label">Telefon</span>
+                                <h3><a href="tel:+905321750818">0532 175 08 18</a></h3>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="info-text">
+                                <span class="info-label">E-Posta</span>
+                                <h3><a href="mailto:info@bakircosmetic.com">info@bakircosmetic.com</a></h3>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                            <div class="info-text">
+                                <span class="info-label">WhatsApp</span>
+                                <h3><a href="https://wa.me/905321750818" target="_blank">Hızlı mesaj gönder →</a></h3>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Sosyal medya -->
+                    <div class="contact-socials">
+                        <a href="https://www.instagram.com/bakircozmetic/" target="_blank" class="social-btn">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/905321750818" target="_blank" class="social-btn">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                    </div>
+
+                    <!-- Form -->
+                    <div class="contact-form-wrap">
+                        <div class="form-title">Bize Yazın</div>
+
+                        <form action="https://formsubmit.co/edanurerguven682@gmail.com" method="POST" id="contactForm">
+                            <input type="hidden" name="_subject" value="Yeni İletişim Formu Mesajı | Bakır Cosmetic">
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_next" value="thank-you.html">
+
+                            <div class="form-row">
+                                <div class="fg">
+                                    <input type="text" name="name" id="fname" placeholder=" " required>
+                                    <label for="fname">Adınız</label>
+                                    <div class="fg-line"></div>
+                                </div>
+                                <div class="fg">
+                                    <input type="text" name="surname" id="fsurname" placeholder=" ">
+                                    <label for="fsurname">Soyadınız</label>
+                                    <div class="fg-line"></div>
+                                </div>
+                            </div>
+
+                            <div class="fg">
+                                <input type="email" name="email" id="femail" placeholder=" " required>
+                                <label for="femail">E-Posta Adresiniz</label>
+                                <div class="fg-line"></div>
+                            </div>
+
+                            <div class="fg">
+                                <input type="tel" name="phone" id="fphone" placeholder=" ">
+                                <label for="fphone">Telefon Numaranız</label>
+                                <div class="fg-line"></div>
+                            </div>
+
+                            <div class="fg textarea-fg">
+                                <textarea name="message" id="fmessage" placeholder=" " required></textarea>
+                                <label for="fmessage">Mesajınız</label>
+                                <div class="fg-line"></div>
+                            </div>
+
+                            <button type="submit" class="btn-submit" id="submitBtn">
+                                Gönder
+                            </button>
+                        </form>
+
+                        <div class="form-success" id="formSuccess">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <p>Mesajınız iletildi. En kısa sürede geri döneceğiz.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SAĞ: HARİTA + SAATLER -->
+                <div class="contact-right">
+
+                    <span class="map-label">Konumumuz</span>
+
+                    <div class="map-wrap">
+                        <div class="map-overlay">
+                            <span>Haritayı görüntüle</span>
+                        </div>
+                        <iframe
+                            src="https://maps.google.com/maps?q=Bakır+Cosmetic+Şanlıurfa&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            allowfullscreen loading="lazy">
+                        </iframe>
+                        <div class="map-address">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Ertuğrul Gazi, 330. Sk., 63300 Merkez / Şanlıurfa</p>
+                        </div>
+                    </div>
+
+                    <!-- Çalışma saatleri -->
+                    <div class="hours-grid">
+                        <div class="hour-item">
+                            <div class="hour-day">Pazartesi — Cuma</div>
+                            <div class="hour-time">09:00 — 18:00</div>
+                        </div>
+                        <div class="hour-item">
+                            <div class="hour-day">Cumartesi</div>
+                            <div class="hour-time">09:00 — 16:00</div>
+                        </div>
+                        <div class="hour-item">
+                            <div class="hour-day">Pazar</div>
+                            <div class="hour-time">Kapalı</div>
+                        </div>
+                        <div class="hour-item">
+                            <div class="hour-day">WhatsApp</div>
+                            <div class="hour-time">7 / 24</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <a href="index.html" class="footer-logo">BAKIR COSMETIC</a>
+                    <p>Güzelliğin profesyonel mimarı. Toptan satış ve proje çözümleri.</p>
+                    <div class="socials">
+                        <a href="https://www.instagram.com/bakircozmetic/" target="_blank"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/905321750818" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Hızlı Erişim</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="about.html">Kurumsal</a></li>
+                        <li><a href="products.html">Koleksiyon</a></li>
+                        <li><a href="studio.html">Mimari Projeler</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Müşteri Hizmetleri</h4>
+                    <ul>
+                        <li><a href="catalogs.html">E-Katalog İndir</a></li>
+                        <li><a href="contact.html">Keşif Talep Formu</a></li>
+                        <li><a href="contact.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <p>Ertuğrul Gazi, 330. Sk., 63300 Merkez/Şanlıurfa</p>
+                    <p class="contact-highlight">0532 175 08 18</p>
+                    <p>info@bakircosmetic.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bakır Cosmetic. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cursor.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        (function () {
+
+            /* ── Scroll reveal ── */
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.contact-left, .contact-right')
+                .forEach(el => observer.observe(el));
+
+
+            /* ── Ripple efekti — Gönder butonu ── */
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function (e) {
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    ripple.style.cssText =
+                        `width:${size}px; height:${size}px; left:${x}px; top:${y}px;`;
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 700);
+                });
+            }
+
+
+            /* ── İletişim kartları — staggered reveal ── */
+            const infoCards = document.querySelectorAll('.info-card');
+            const cardObserver = new IntersectionObserver(entries => {
+                entries.forEach((entry, i) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateX(0)';
+                        }, i * 100);
+                        cardObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            infoCards.forEach((card, i) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateX(-20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease, background 0.35s ease, border-color 0.35s ease';
+                cardObserver.observe(card);
+            });
+
+
+            /* ── Çalışma saatleri reveal ── */
+            const hourItems = document.querySelectorAll('.hour-item');
+            const hourObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const items = document.querySelectorAll('.hour-item');
+                        items.forEach((item, i) => {
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'translateY(0)';
+                            }, i * 80);
+                        });
+                        hourObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            hourItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(15px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease, background 0.3s, border-color 0.3s';
+                hourObserver.observe(item);
+            });
+
+        })();
+    </script>
+
+</body>
+
+</html>

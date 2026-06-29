@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Detayı | Bakır Cosmetic</title>
+    <meta name="description" content="Profesyonel kuaför ürünleri.">
+
+    <!-- Fonts & CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Header (Same as Index) -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                BAKIR <span class="text-copper">COSMETIC</span>
+            </a>
+
+            <nav class="desktop-nav">
+                <a href="index.html">Ana Sayfa</a>
+                <a href="about.html">Kurumsal</a>
+                <a href="products.html">Koleksiyon</a>
+                <a href="studio.html">Studio Bakır</a>
+                <a href="contact.html">İletişim</a>
+
+            </nav>
+
+            <button class="burger-menu" aria-label="Menu">
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <nav class="mobile-nav">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="about.html">Kurumsal</a>
+            <a href="products.html">Koleksiyon</a>
+            <a href="studio.html">Salon Tasarımı</a>
+            <a href="contact.html">İletişim</a>
+            <a href="catalogs.html" class="mobile-cta">E-Kataloglar</a>
+        </nav>
+    </div>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail-section">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="products.html"><i class="fa-solid fa-arrow-left"></i> Koleksiyona Dön</a>
+            </div>
+
+            <div class="detail-grid" id="product-detail-container">
+                <!-- Product Details will be injected here via JS -->
+                <div class="loading-skeleton" style="width: 100%; height: 500px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <a href="index.html" class="footer-logo">BAKIR COSMETIC</a>
+                    <p>Güzelliğin profesyonel mimarı. Toptan satış ve proje çözümleri.</p>
+                    <div class="socials">
+                        <a href="https://www.instagram.com/bakircozmetic/" target="_blank"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/905321750818" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Hızlı Erişim</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="about.html">Kurumsal</a></li>
+                        <li><a href="products.html">Koleksiyon</a></li>
+                        <li><a href="studio.html">Mimari Projeler</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Müşteri Hizmetleri</h4>
+                    <ul>
+
+                        <li><a href="catalogs.html">E-Katalog İndir</a></li>
+                        <li><a href="contact.html">Keşif Talep Formu</a></li>
+                        <li><a href="contact.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <p>Ertuğrul Gazi, 330. Sk., 63300 Merkez/Şanlıurfa</p>
+                    <p class="contact-highlight">0532 175 08 18</p>
+                    <p>info@bakircosmetic.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bakır Cosmetic. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="data/products_db.js?v=1"></script>
+    <script src="cursor.js"></script>
+    <script src="main.js?v=1"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.initProductDetail) {
+                window.initProductDetail();
+            }
+        });
+    </script>
+</body>
+
+</html>

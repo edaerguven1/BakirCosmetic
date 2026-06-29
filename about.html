@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurumsal | Bakır Cosmetic</title>
+    <meta name="description" content="Bakır Cosmetic hakkında bilgiler, vizyonumuz ve misyonumuz.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ═══════════════════════════════════════
+           ANIMATED GRADIENT HERO
+        ═══════════════════════════════════════ */
+        .gradient-hero {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            overflow: hidden;
+            background: #080808;
+            margin-top: 80px;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gradient-hero .hero-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            pointer-events: none;
+            text-align: center;
+            max-width: none !important;
+        }
+
+        .gradient-hero .hero-label {
+            display: block;
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 11px;
+            letter-spacing: 6px;
+            color: rgba(200, 130, 26, 0.8);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0;
+            text-align: center;
+            animation: heroFadeUp 0.9s ease 0.2s forwards;
+        }
+
+        .gradient-hero .hero-title {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: clamp(36px, 6vw, 72px);
+            color: #fff;
+            font-weight: 400;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            line-height: 1;
+            opacity: 0;
+            text-align: center;
+            animation: heroFadeUp 0.9s ease 0.45s forwards;
+        }
+
+        .gradient-hero .hero-line {
+            width: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(200, 130, 26, 0.6), transparent);
+            margin: 20px auto;
+            animation: heroLineGrow 1s ease 0.9s forwards;
+        }
+
+        .gradient-hero .hero-sub {
+            font-family: var(--font-body, 'Manrope', sans-serif);
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            opacity: 0;
+            text-align: center;
+            animation: heroFadeUp 0.9s ease 1s forwards;
+        }
+
+        @keyframes heroFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heroLineGrow {
+            to {
+                width: 140px;
+            }
+        }
+
+        /* ═══════════════════════════════════════
+           NEDEN BAKIR — 4 KART
+        ═══════════════════════════════════════ */
+        .why-section {
+            padding: 110px 0;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(200, 130, 26, 0.3), transparent);
+        }
+
+        .why-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(200, 130, 26, 0.3), transparent);
+        }
+
+        .why-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .why-header .label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 5px;
+            color: #c8821a;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .why-header h2 {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 2.4rem;
+            color: #fff;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+        }
+
+        /* Her kart */
+        .why-card {
+            position: relative;
+            padding: 50px 36px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: center;
+            overflow: hidden;
+            cursor: default;
+            /* reveal için */
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease,
+                background 0.4s ease, border-color 0.4s ease;
+        }
+
+        .why-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .why-card:nth-child(1) {
+            transition-delay: 0s;
+        }
+
+        .why-card:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+
+        .why-card:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        .why-card:nth-child(4) {
+            transition-delay: 0.3s;
+        }
+
+        .why-card:hover {
+            background: rgba(200, 130, 26, 0.05);
+            border-color: rgba(200, 130, 26, 0.25);
+        }
+
+        /* Köşe süsü */
+        .why-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-top: 2px solid #c8821a;
+            border-left: 2px solid #c8821a;
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .why-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 2px solid #c8821a;
+            border-right: 2px solid #c8821a;
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .why-card:hover::before,
+        .why-card:hover::after {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* İkon */
+        .why-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 28px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .why-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(200, 130, 26, 0.25);
+            transition: border-color 0.4s, transform 0.4s;
+        }
+
+        .why-card:hover .why-icon::before {
+            border-color: rgba(200, 130, 26, 0.6);
+            transform: scale(1.12);
+        }
+
+        .why-icon i {
+            font-size: 1.6rem;
+            color: #c8821a;
+            transition: transform 0.4s ease;
+        }
+
+        .why-card:hover .why-icon i {
+            transform: scale(1.15);
+        }
+
+        /* Sayı */
+        .why-number {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 2.6rem;
+            color: #c8821a;
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 6px;
+            letter-spacing: -1px;
+        }
+
+        .why-title {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+
+        /* İnce çizgi */
+        .why-line {
+            width: 24px;
+            height: 1px;
+            background: #c8821a;
+            margin: 0 auto 18px;
+            transition: width 0.4s ease;
+        }
+
+        .why-card:hover .why-line {
+            width: 48px;
+        }
+
+        .why-desc {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.45);
+            line-height: 1.7;
+        }
+
+        /* ═══════════════════════════════════════
+           MARKA DUVARI
+        ═══════════════════════════════════════ */
+        .brands-section {
+            padding: 100px 0;
+            background: #080808;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brands-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .brands-header .label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 5px;
+            color: #c8821a;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .brands-header h2 {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 2rem;
+            color: #fff;
+            font-weight: 400;
+        }
+
+        .brands-header p {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 0.9rem;
+            margin-top: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* Marka grid */
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+        }
+
+        .brand-item {
+            position: relative;
+            padding: 42px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: default;
+            overflow: hidden;
+            /* reveal */
+            opacity: 0;
+            transform: scale(0.94);
+            transition: opacity 0.6s ease, transform 0.6s ease,
+                background 0.35s ease, border-color 0.35s ease;
+        }
+
+        .brand-item.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .brand-item:nth-child(1) {
+            transition-delay: 0s;
+        }
+
+        .brand-item:nth-child(2) {
+            transition-delay: 0.07s;
+        }
+
+        .brand-item:nth-child(3) {
+            transition-delay: 0.14s;
+        }
+
+        .brand-item:nth-child(4) {
+            transition-delay: 0.21s;
+        }
+
+        .brand-item:nth-child(5) {
+            transition-delay: 0.28s;
+        }
+
+        .brand-item:nth-child(6) {
+            transition-delay: 0.35s;
+        }
+
+        .brand-item:nth-child(7) {
+            transition-delay: 0.42s;
+        }
+
+        .brand-item:nth-child(8) {
+            transition-delay: 0.49s;
+        }
+
+        /* Hover arka plan ışığı */
+        .brand-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(200, 130, 26, 0.08), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .brand-item:hover {
+            border-color: rgba(200, 130, 26, 0.2);
+            background: rgba(200, 130, 26, 0.03);
+        }
+
+        .brand-item:hover::before {
+            opacity: 1;
+        }
+
+        /* Marka adı */
+        .brand-name {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 1.05rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+            transition: color 0.35s ease, letter-spacing 0.35s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-item:hover .brand-name {
+            color: rgba(200, 130, 26, 0.85);
+            letter-spacing: 5px;
+        }
+
+        /* Kategori etiketi */
+        .brand-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: rgba(200, 130, 26, 0);
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: color 0.35s ease;
+        }
+
+        .brand-item:hover .brand-tag {
+            color: rgba(200, 130, 26, 0.5);
+        }
+
+        /* ═══════════════════════════════════════
+           VİZYON / MİSYON — FLIP KART
+        ═══════════════════════════════════════ */
+        .vm-card {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .vm-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
+            transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+
+        .vm-card:hover .vm-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .vm-front,
+        .vm-back {
+            position: absolute;
+            inset: 0;
+            padding: 50px;
+            text-align: center;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background: var(--color-surface, #111);
+            border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vm-back {
+            transform: rotateY(180deg);
+            background: rgba(200, 130, 26, 0.08);
+            border-color: rgba(200, 130, 26, 0.3);
+        }
+
+        .vm-front i {
+            font-size: 2.8rem;
+            color: #c8821a;
+            margin-bottom: 22px;
+        }
+
+        .vm-front h3 {
+            font-size: 1.4rem;
+            color: #fff;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .vm-front p {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .vm-back p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            font-size: 0.9rem;
+        }
+
+        /* ═══════════════════════════════════════
+           HİKAYE — PARALLAX + REVEAL
+        ═══════════════════════════════════════ */
+        .story-reveal {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .story-reveal.right {
+            transform: translateX(30px);
+        }
+
+        .story-reveal.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .why-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .brands-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 540px) {
+            .why-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .brands-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .why-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">BAKIR <span class="text-copper">COSMETIC</span></a>
+            <nav class="desktop-nav">
+                <a href="index.html">Ana Sayfa</a>
+                <a href="about.html" class="active-link">Kurumsal</a>
+                <a href="products.html">Koleksiyon</a>
+                <a href="studio.html">Studio Bakır</a>
+                <a href="contact.html">İletişim</a>
+            </nav>
+            <button class="burger-menu" aria-label="Menu"><span></span><span></span></button>
+        </div>
+    </header>
+
+    <div class="mobile-menu-overlay">
+        <nav class="mobile-nav">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="about.html">Kurumsal</a>
+            <a href="products.html">Koleksiyon</a>
+            <a href="studio.html">Salon Tasarımı</a>
+            <a href="contact.html">İletişim</a>
+            <a href="catalogs.html" class="mobile-cta">E-Kataloglar</a>
+        </nav>
+    </div>
+
+    <!-- Animated Gradient Hero -->
+    <section class="gradient-hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-content">
+            <span class="hero-label">Hakkımızda</span>
+            <h1 class="hero-title">KURUMSAL</h1>
+            <div class="hero-line"></div>
+            <p class="hero-sub">Değerlerimiz, hikayemiz ve geleceğe bakışımız</p>
+        </div>
+    </section>
+
+    <!-- ── HİKAYE ── -->
+    <section class="section" style="padding: 100px 0;">
+        <div class="container">
+            <div class="split-section" style="min-height: auto; margin-bottom: 100px;">
+
+                <div class="split-side story-reveal" style="padding: 0; border: none;">
+                    <div class="content" style="max-width: 100%; text-align: left;">
+                        <span class="label"
+                            style="color: var(--color-copper); letter-spacing: 0.1em; font-weight: 600;">HİKAYEMİZ</span>
+                        <h2 style="font-size: 2.5rem; margin: 20px 0;">Güzelliğin Profesyonel Mimarı</h2>
+                        <p style="color: var(--color-text-muted); margin-bottom: 20px;">
+                            Bakır Cosmetic, kuaför salonlarının ihtiyaç duyduğu tüm profesyonel ürünleri ve ekipmanları
+                            en yüksek kalite standartlarında sunmak amacıyla kurulmuştur. Şanlıurfa merkezli firmamız,
+                            sadece bir tedarikçi değil, aynı zamanda salon işletmecilerinin çözüm ortağıdır.
+                        </p>
+                        <p style="color: var(--color-text-muted);">
+                            Yılların verdiği tecrübe ile sektörün dinamiklerini yakından takip ediyor, global trendleri
+                            yerel pazara entegre ediyoruz. "Bakır İtriyat" olarak başladığımız bu yolculukta, bugün
+                            "Bakır Cosmetic" markasıyla bölgenin en güçlü tedarik ağlarından birine sahibiz.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="split-side story-reveal right"
+                    style="padding: 0; border: none; min-height: 400px; position: relative;">
+                    <img src="assets/images/about-store2.png"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;" alt="Mağazamız">
+                </div>
+            </div>
+
+            <!-- VİZYON / MİSYON — flip kartlar -->
+            <div class="vision-mission-grid"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; min-height: 280px;">
+
+                <div class="vm-card">
+                    <div class="vm-card-inner">
+                        <div class="vm-front">
+                            <i class="fa-solid fa-eye"></i>
+                            <h3>VİZYON</h3>
+                            <p
+                                style="font-size:0.75rem; color:rgba(255,255,255,0.3); margin-top:8px; letter-spacing:2px;">
+                                Kartı çevir →</p>
+                        </div>
+                        <div class="vm-back">
+                            <p>Sektördeki yeniliklerin öncüsü olarak, kuaförlük sanatına değer katan, estetik ve
+                                kaliteyi
+                                ulaşılabilir kılan, Türkiye'nin lider profesyonel kozmetik tedarikçisi ve salon tasarım
+                                markası olmak.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vm-card">
+                    <div class="vm-card-inner">
+                        <div class="vm-front">
+                            <i class="fa-solid fa-bullseye"></i>
+                            <h3>MİSYON</h3>
+                            <p
+                                style="font-size:0.75rem; color:rgba(255,255,255,0.3); margin-top:8px; letter-spacing:2px;">
+                                Kartı çevir →</p>
+                        </div>
+                        <div class="vm-back">
+                            <p>Müşterilerimize en kaliteli ürünleri ve en yenilikçi salon tasarımlarını sunarak, onların
+                                iş
+                                süreçlerine değer katmak. Etik ticaret anlayışımızla, sürdürülebilir başarı ve
+                                karşılıklı güvene
+                                dayalı uzun soluklu iş birlikleri kurmak.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ── NEDEN BAKIR? ── -->
+    <section class="why-section">
+        <div class="container">
+            <div class="why-header">
+                <span class="label">FARKIMIZ</span>
+                <h2>Neden Bakır Cosmetic?</h2>
+            </div>
+
+            <div class="why-grid">
+
+                <div class="why-card">
+                    <div class="why-icon"><i class="fa-solid fa-medal"></i></div>
+                    <div class="why-number">45+</div>
+                    <div class="why-title">Yıl Tecrübe</div>
+                    <div class="why-line"></div>
+                    <p class="why-desc">1978'den bu yana sektörün içindeyiz. Deneyimimiz, her adımda rehberiniz olur.
+                    </p>
+                </div>
+
+                <div class="why-card">
+                    <div class="why-icon"><i class="fa-solid fa-globe"></i></div>
+                    <div class="why-number">15+</div>
+                    <div class="why-title">Global Marka</div>
+                    <div class="why-line"></div>
+                    <p class="why-desc">Schwarzkopf, Wella, L'Oreal ve daha fazlası. Dünyanın en iyilerini kapınıza
+                        getiriyoruz.</p>
+                </div>
+
+                <div class="why-card">
+                    <div class="why-icon"><i class="fa-solid fa-key"></i></div>
+                    <div class="why-number">150+</div>
+                    <div class="why-title">Teslim Edilen Salon</div>
+                    <div class="why-line"></div>
+                    <p class="why-desc">Tasarımdan uygulamaya, anahtar teslim salon projelerinde güvenilir çözüm
+                        ortağınız.</p>
+                </div>
+
+                <div class="why-card">
+                    <div class="why-icon"><i class="fa-solid fa-headset"></i></div>
+                    <div class="why-number">7/24</div>
+                    <div class="why-title">Destek</div>
+                    <div class="why-line"></div>
+                    <p class="why-desc">Satış öncesi ve sonrası kesintisiz destek. Sorunlarınız bizim sorunumuzdur.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ── MARKA DUVARI ── -->
+    <section class="brands-section">
+        <div class="container">
+            <div class="brands-header">
+                <span class="label">İŞ ORTAKLARIMIZ</span>
+                <h2>Çalıştığımız Markalar</h2>
+                <p>Dünya'nın önde gelen profesyonel kozmetik markaları ile iş ortağıyız.</p>
+            </div>
+
+            <div class="brands-grid">
+                <div class="brand-item">
+                    <span class="brand-name">Schwarzkopf</span>
+                    <span class="brand-tag">Saç Bakımı</span>
+                </div>
+                <div class="brand-item">
+                    <span class="brand-name">Wella</span>
+                    <span class="brand-tag">Renklendirme</span>
+                </div>
+                <div class="brand-item">
+                    <span class="brand-name">L'Oreal</span>
+                    <span class="brand-tag">Profesyonel</span>
+                </div>
+                <div class="brand-item">
+                    <span class="brand-name">Morfose</span>
+                    <span class="brand-tag">Bakım & Şekil</span>
+                </div>
+                <div class="brand-item">
+                    <span class="brand-name">Davines</span>
+                    <span class="brand-tag">İtalyan Lüksü</span>
+                </div>
+                <div class="brand-item">
+                    <span class="brand-name">Kerastase</span>
+                    <span class="brand-tag">Premium Bakım</span>
+                </div>
+                <div class="brand-item">
+                    <span class="brand-name">Olaplex</span>
+                    <span class="brand-tag">Bağ Onarımı</span>
+                </div>
+                <div class="brand-item">
+                    <span class="brand-name">Dyson</span>
+                    <span class="brand-tag">Teknik Ekipman</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <a href="index.html" class="footer-logo">BAKIR COSMETIC</a>
+                    <p>Güzelliğin profesyonel mimarı. Toptan satış ve proje çözümleri.</p>
+                    <div class="socials">
+                        <a href="https://www.instagram.com/bakircozmetic/" target="_blank"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/905321750818" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Hızlı Erişim</h4>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="about.html">Kurumsal</a></li>
+                        <li><a href="products.html">Koleksiyon</a></li>
+                        <li><a href="studio.html">Mimari Projeler</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Müşteri Hizmetleri</h4>
+                    <ul>
+                        <li><a href="catalogs.html">E-Katalog İndir</a></li>
+                        <li><a href="contact.html">Keşif Talep Formu</a></li>
+                        <li><a href="contact.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <p>Ertuğrul Gazi, 330. Sk., 63300 Merkez/Şanlıurfa</p>
+                    <p class="contact-highlight">0532 175 08 18</p>
+                    <p>info@bakircosmetic.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bakır Cosmetic. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cursor.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        (function () {
+
+            /* ── Gradient Hero Canvas ── */
+            const canvas = document.getElementById('hero-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let W, H, frame = 0;
+
+                function resize() {
+                    W = canvas.width = canvas.offsetWidth;
+                    H = canvas.height = canvas.offsetHeight;
+                }
+                resize();
+                window.addEventListener('resize', resize);
+
+                const orbs = [
+                    { bx: 0.15, by: 0.5, r: 0.6, speed: 0.006, phase: 0 },
+                    { bx: 0.85, by: 0.3, r: 0.5, speed: 0.009, phase: 2.1 },
+                    { bx: 0.5, by: 0.85, r: 0.45, speed: 0.007, phase: 4.2 },
+                    { bx: 0.3, by: 0.1, r: 0.38, speed: 0.011, phase: 1.0 },
+                ];
+
+                const C1 = [200, 130, 26];
+                const C2 = [150, 80, 10];
+
+                function draw() {
+                    frame++;
+                    ctx.clearRect(0, 0, W, H);
+                    ctx.fillStyle = '#080808';
+                    ctx.fillRect(0, 0, W, H);
+
+                    orbs.forEach((o, i) => {
+                        const x = (o.bx + Math.sin(frame * o.speed + o.phase) * 0.18) * W;
+                        const y = (o.by + Math.cos(frame * o.speed * 0.7 + o.phase) * 0.22) * H;
+                        const r = o.r * Math.min(W, H);
+                        const col = i % 2 === 0 ? C1 : C2;
+                        const alpha = [0.16, 0.10, 0.07, 0.05][i];
+
+                        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+                        g.addColorStop(0, `rgba(${col},${alpha})`);
+                        g.addColorStop(0.5, `rgba(${col},${alpha * 0.3})`);
+                        g.addColorStop(1, `rgba(0,0,0,0)`);
+                        ctx.fillStyle = g;
+                        ctx.fillRect(0, 0, W, H);
+                    });
+
+                    /* Dalga çizgileri */
+                    for (let i = 0; i < 7; i++) {
+                        const y = (H / 8) * (i + 1) + Math.sin(frame * 0.012 + i * 0.9) * 10;
+                        ctx.beginPath();
+                        ctx.moveTo(0, y); ctx.lineTo(W, y);
+                        ctx.strokeStyle = `rgba(200,130,26,${0.02 + Math.sin(frame * 0.018 + i) * 0.008})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+
+                    /* Köşe aksen noktaları */
+                    [[40, 40], [W - 40, 40], [40, H - 40], [W - 40, H - 40]].forEach(([x, y], i) => {
+                        const a = 0.25 + Math.sin(frame * 0.04 + i) * 0.18;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 2, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(200,130,26,${a})`;
+                        ctx.fill();
+                    });
+
+                    requestAnimationFrame(draw);
+                }
+                draw();
+            }
+
+
+            /* ── IntersectionObserver — genel reveal ── */
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            /* Neden Bakır kartları */
+            document.querySelectorAll('.why-card').forEach(el => observer.observe(el));
+
+            /* Marka öğeleri */
+            document.querySelectorAll('.brand-item').forEach(el => observer.observe(el));
+
+            /* Hikaye bölümü */
+            document.querySelectorAll('.story-reveal').forEach(el => observer.observe(el));
+
+
+            /* ── Neden Bakır — sayaç animasyonu ── */
+            const whyCards = document.querySelectorAll('.why-card');
+            const counterObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const numEl = entry.target.querySelector('.why-number');
+                    if (!numEl || numEl.dataset.counted) return;
+                    numEl.dataset.counted = true;
+
+                    const text = numEl.textContent.trim();
+                    const suffix = text.replace(/[0-9]/g, ''); // '+', '/', '24' gibi
+                    const number = parseInt(text.replace(/\D/g, ''), 10);
+
+                    if (isNaN(number)) return; // "7/24" gibi sayısal olmayan → olduğu gibi kalsın
+
+                    let start = 0;
+                    const duration = 1600;
+                    const startTime = performance.now();
+
+                    function tick(now) {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        start = Math.round(eased * number);
+                        numEl.textContent = start + suffix;
+                        if (progress < 1) requestAnimationFrame(tick);
+                    }
+                    requestAnimationFrame(tick);
+
+                    counterObserver.unobserve(entry.target);
+                });
+            }, { threshold: 0.4 });
+
+            whyCards.forEach(el => counterObserver.observe(el));
+
+
+            /* ── Marka duvarı — mouse spotlight ── */
+            document.querySelectorAll('.brand-item').forEach(item => {
+                item.addEventListener('mousemove', e => {
+                    const rect = item.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    item.style.setProperty('--mx', x + '%');
+                    item.style.setProperty('--my', y + '%');
+                    item.querySelector('::before'); // CSS var güncellenir
+                });
+            });
+
+        })();
+    </script>
+
+</body>
+
+</html>
