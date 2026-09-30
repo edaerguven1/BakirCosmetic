@@ -4,20 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
     <title>Ürün Detayı | Bakır Cosmetic</title>
     <meta name="description" content="Profesyonel kuaför ürünleri.">
 
     <!-- Fonts & CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&family=Syne:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/fonts.css?v=1">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css?v=2">
+
+    <link rel="stylesheet" href="style.css?v=43">
+    <link rel="stylesheet" href="mobile.css?v=40" media="screen and (max-width: 768px)">
+    <link rel="icon" type="image/png" href="assets/images/logoo2.png">
 </head>
 
 <body>
+
+    <a class="skip-link" href="#main-content">Ana içeriğe geç</a>
 
     <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
@@ -34,12 +36,12 @@
                 <a href="index.html">Ana Sayfa</a>
                 <a href="about.html">Kurumsal</a>
                 <a href="products.html">Koleksiyon</a>
-                <a href="studio.html">Studio Bakır</a>
+                <a href="studio.html">Salon Tasarımı</a>
                 <a href="contact.html">İletişim</a>
 
             </nav>
 
-            <button class="burger-menu" aria-label="Menu">
+            <button class="burger-menu" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobile-menu-overlay">
                 <span></span>
                 <span></span>
             </button>
@@ -47,7 +49,7 @@
     </header>
 
     <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay">
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay" aria-hidden="true">
         <nav class="mobile-nav">
             <a href="index.html">Ana Sayfa</a>
             <a href="about.html">Kurumsal</a>
@@ -59,6 +61,7 @@
     </div>
 
     <!-- Product Detail Section -->
+    <main id="main-content">
     <section class="product-detail-section">
         <div class="container">
             <div class="breadcrumb">
@@ -72,17 +75,18 @@
         </div>
     </section>
 
+    </main>
+
     <!-- Footer -->
-    <footer class="footer">
+    <footer id="contact" class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col brand-col">
                     <a href="index.html" class="footer-logo">BAKIR COSMETIC</a>
                     <p>Güzelliğin profesyonel mimarı. Toptan satış ve proje çözümleri.</p>
                     <div class="socials">
-                        <a href="https://www.instagram.com/bakircozmetic/" target="_blank"><i
-                                class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/905321750818" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/bakircozmetic/" target="_blank" rel="noopener noreferrer" aria-label="Bakır Cosmetic Instagram hesabı"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/905321750818" target="_blank" rel="noopener noreferrer" aria-label="Bakır Cosmetic WhatsApp hattı"><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -91,42 +95,36 @@
                         <li><a href="index.html">Ana Sayfa</a></li>
                         <li><a href="about.html">Kurumsal</a></li>
                         <li><a href="products.html">Koleksiyon</a></li>
-                        <li><a href="studio.html">Mimari Projeler</a></li>
+                        <li><a href="studio.html">Salon Tasarımı</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Müşteri Hizmetleri</h4>
                     <ul>
-
                         <li><a href="catalogs.html">E-Katalog İndir</a></li>
-                        <li><a href="contact.html">Keşif Talep Formu</a></li>
+                        <li><a href="https://wa.me/905321750818?text=Merhaba%2C%20salon%20tasar%C4%B1m%C4%B1%20ve%20ke%C5%9Fif%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" aria-label="Proje keşfi için WhatsApp'tan yazın">Proje Keşfi Talebi</a></li>
                         <li><a href="contact.html">İletişim</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>İletişim</h4>
-                    <p>Ertuğrul Gazi, 330. Sk., 63300 Merkez/Şanlıurfa</p>
-                    <p class="contact-highlight">0532 175 08 18</p>
-                    <p>info@bakircosmetic.com</p>
+                    <ul>
+                        <li>Ertuğrul Gazi, 330. Sk.,<br>63300 Merkez / Şanlıurfa</li>
+                        <li>0532 175 08 18</li>
+                        <li>info@bakircosmetic.com</li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Bakır Cosmetic. Tüm hakları saklıdır.</p>
+                <p>&copy; 2026 Bakır Cosmetic. Tüm hakları saklıdır. | <a href="#kvkk-modal" class="open-kvkk-modal">KVKK Aydınlatma Metni</a></p>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="data/products_db.js?v=1"></script>
-    <script src="cursor.js"></script>
-    <script src="main.js?v=1"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.initProductDetail) {
-                window.initProductDetail();
-            }
-        });
-    </script>
+    <script src="data/products_db.js?v=4"></script>
+    <script src="cursor.js?v=2"></script>
+    <script src="main.js?v=20"></script>
+    <script src="privacy-modal.js?v=2"></script>
 </body>
-
 </html>

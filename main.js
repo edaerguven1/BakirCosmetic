@@ -5,13 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Header Scroll Effect ---
     const header = document.querySelector('.header');
 
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    }
 
     // --- Before / After Slider Logic ---
     const sliderContainer = document.querySelector('.comparison-slider');
@@ -54,6 +56,29 @@ document.addEventListener('DOMContentLoaded', () => {
     let allProducts = [];
     let currentFiltered = [];
 
+    const normalizeFilterText = (value = '') => value
+        .toString()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/ı/g, 'i')
+        .toLocaleLowerCase('tr-TR')
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim();
+
+    const canonicalBrandLabel = (brand = '', productName = '') => {
+        const brandKey = normalizeFilterText(brand).replace(/\s/g, '');
+        const productKey = normalizeFilterText(productName).replace(/\s/g, '');
+
+        if (brandKey.includes('morfose')) return 'Morfose';
+        if (brandKey.includes('osis') || productKey.includes('osis')) return 'Osis+';
+        if (brandKey.includes('schwarzkopf') || brandKey.includes('igora')) return 'Schwarzkopf';
+
+        return brand.toString().trim();
+    };
+
+    const canonicalBrandKey = (brand = '', productName = '') =>
+        normalizeFilterText(canonicalBrandLabel(brand, productName)).replace(/\s/g, '');
+
     // Pagination State
     const ITEMS_PER_PAGE = 12;
     let currentPage = 1;
@@ -63,7 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             // Check if window.PRODUCT_DATA exists (loaded from products_db.js)
             if (window.PRODUCT_DATA) {
-                allProducts = window.PRODUCT_DATA;
+                allProducts = window.PRODUCT_DATA.map(product => ({
+                    ...product,
+                    brand: canonicalBrandLabel(product.brand, product.name)
+                }));
             } else {
                 console.error("Product database not loaded!");
                 allProducts = [];
@@ -77,11 +105,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const paramBrand = urlParams.get('brand');
 
             if (paramCategory) {
-                const btn = document.querySelector(`#category-filters button[data-filter="${paramCategory}"]`);
+                const btn = [...document.querySelectorAll('#category-filters button')].find(button => {
+                    if (button.dataset.filter === paramCategory) return true;
+                    return (button.dataset.group || '').split(',').includes(paramCategory);
+                });
                 if (btn) btn.click();
+                else renderProducts();
             } else if (paramBrand) {
-                const btn = document.querySelector(`#brand-filters button[data-brand="${paramBrand}"]`);
-                if (btn) btn.click();
+                const requestedBrandKey = canonicalBrandKey(paramBrand);
+                const btn = [...document.querySelectorAll('#brand-filters button[data-brand]')]
+                    .find(button => canonicalBrandKey(button.dataset.brand) === requestedBrandKey);
+
+                if (btn) {
+                    btn.click();
+                } else {
+                    currentFiltered = allProducts.filter(product =>
+                        canonicalBrandKey(product.brand, product.name) === requestedBrandKey
+                    );
+                    renderProducts();
+                }
             } else {
                 renderProducts(); // Default render all
             }
@@ -111,9 +153,33 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = '';
         if (paginationContainer) paginationContainer.innerHTML = '';
 
+        const countEl = document.getElementById('live-product-count');
+        if (countEl) countEl.innerText = currentFiltered.length;
+
         if (currentFiltered.length === 0) {
-            const msg = allProducts.length === 0 ? "Veritabanı yüklenemedi." : "Kriterlere uygun ürün bulunamadı.";
-            container.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">${msg}</p>`;
+            if (allProducts.length === 0) {
+                container.innerHTML = '<div class="catalog-empty-state"><i class="fa-solid fa-triangle-exclamation"></i><h2>Ürün verisi yüklenemedi</h2><p>Lütfen sayfayı yenileyin veya bizimle iletişime geçin.</p></div>';
+                return;
+            }
+
+            const searchInput = document.getElementById('product-search');
+            const hasSearch = Boolean(searchInput && searchInput.value.trim());
+            const heading = hasSearch ? 'Aradığınız ürün listede görünmüyor' : 'Bu ürün grubu henüz çevrim içi katalogda yok';
+            container.innerHTML = `
+                <div class="catalog-empty-state">
+                    <span class="catalog-empty-kicker">ÜRÜN DESTEĞİ</span>
+                    <i class="fa-solid fa-comments"></i>
+                    <h2>${heading}</h2>
+                    <p>Stok ve alternatif ürün bilgisi için ekibimize doğrudan ulaşabilirsiniz.</p>
+                    <div class="catalog-empty-actions">
+                        <a href="https://wa.me/905321750818?text=Merhaba%2C%20arad%C4%B1%C4%9F%C4%B1m%20%C3%BCr%C3%BCn%20grubu%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="btn btn-copper">
+                            <i class="fa-brands fa-whatsapp"></i> WhatsApp'tan Sor
+                        </a>
+                        <a href="tel:+905321750818" class="btn btn-outline">
+                            <i class="fa-solid fa-phone"></i> Bizi Ara
+                        </a>
+                    </div>
+                </div>`;
             return;
         }
 
@@ -129,31 +195,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         productsToShow.forEach((product, index) => {
             const card = document.createElement('div');
-            card.className = 'product-card reveal-card';
-            // Staggered delay for the initial load or filter
-            card.style.transitionDelay = `${(index % ITEMS_PER_PAGE) * 0.1}s`;
+            card.className = 'product-card visible';
+            card.style.transitionDelay = `${(index % ITEMS_PER_PAGE) * 0.05}s`;
 
-            const imgUrl = product.image || 'https://placehold.co/600x800?text=No+Image';
+            const imgUrl = product.image || 'assets/images/product-placeholder.svg';
+            const shortDesc = product.description ? (product.description.length > 65 ? product.description.substring(0, 65) + '...' : product.description) : 'Profesyonel kuaför ve bakım serisi.';
+            const catLabel = product.category ? product.category.replace('-', ' ').toUpperCase() : 'KOLEKSİYON';
 
             card.innerHTML = `
-                <a href="product-detail.html?id=${product.id}#${product.id}" class="p-link">
-                    <div class="p-image">
-                        <img src="${imgUrl}" alt="${product.name}" loading="lazy">
+                <a href="product-detail.html?id=${product.id}#${product.id}" class="classic-3d-card">
+                    <div class="p-image-3d">
+                        <div class="card-glow-bg"></div>
+                        <img src="${imgUrl}" alt="${product.name}" class="img-3d-render" loading="lazy" decoding="async">
                     </div>
-                    <div class="p-info">
-                        <p>${product.brand}</p>
-                        <h3>${product.name}</h3>
-                        <span class="p-link-text">İNCELE <i class="fa-solid fa-arrow-right"></i></span>
+                    <div class="p-info-3d">
+                        <div>
+                            <h3>${product.name}</h3>
+                            <p class="p-desc-3d">${shortDesc}</p>
+                        </div>
+                        <div class="p-action">
+                            <span class="btn-incele">İNCELE <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
                     </div>
                 </a>
             `;
             container.appendChild(card);
-            
-            // Trigger animation in next frame
-            requestAnimationFrame(() => {
-                observeCards();
-                initTilt();
-            });
+        });
+
+        requestAnimationFrame(() => {
+            initTilt();
         });
 
         // Render Pagination Controls
@@ -163,25 +233,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderPaginationControls(totalPages, container) {
+        const scrollToTarget = () => {
+            const targetSec = document.querySelector('.catalog-main-section') || document.querySelector('.catalog-section');
+            if (targetSec) {
+                window.scrollTo({ top: targetSec.offsetTop - 100, behavior: 'smooth' });
+            }
+        };
+
         // Prev Button
         const prevBtn = document.createElement('button');
         prevBtn.className = 'pagination-btn';
+        prevBtn.type = 'button';
+        prevBtn.setAttribute('aria-label', 'Önceki ürün sayfası');
         prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
         prevBtn.disabled = currentPage === 1;
         prevBtn.addEventListener('click', () => {
             if (currentPage > 1) {
                 currentPage--;
                 renderProducts();
-                window.scrollTo({ top: document.querySelector('.catalog-section').offsetTop - 100, behavior: 'smooth' });
+                scrollToTarget();
             }
         });
         container.appendChild(prevBtn);
 
         // Page Numbers
-        // Simple logic: Show all if <= 5, else show partial (impl simplified for now)
-        // For better UX with many pages, would need ellipsis logic. 
-        // Showing up to 5 pages around current page for simplicity.
-
         let startPage = Math.max(1, currentPage - 2);
         let endPage = Math.min(totalPages, startPage + 4);
 
@@ -192,11 +267,14 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = startPage; i <= endPage; i++) {
             const btn = document.createElement('button');
             btn.className = `pagination-btn ${i === currentPage ? 'active' : ''}`;
+            btn.type = 'button';
+            btn.setAttribute('aria-label', `${i}. ürün sayfasına git`);
+            if (i === currentPage) btn.setAttribute('aria-current', 'page');
             btn.innerText = i;
             btn.addEventListener('click', () => {
                 currentPage = i;
                 renderProducts();
-                window.scrollTo({ top: document.querySelector('.catalog-section').offsetTop - 100, behavior: 'smooth' });
+                scrollToTarget();
             });
             container.appendChild(btn);
         }
@@ -204,39 +282,37 @@ document.addEventListener('DOMContentLoaded', () => {
         // Next Button
         const nextBtn = document.createElement('button');
         nextBtn.className = 'pagination-btn';
+        nextBtn.type = 'button';
+        nextBtn.setAttribute('aria-label', 'Sonraki ürün sayfası');
         nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
         nextBtn.disabled = currentPage === totalPages;
         nextBtn.addEventListener('click', () => {
             if (currentPage < totalPages) {
                 currentPage++;
                 renderProducts();
-                window.scrollTo({ top: document.querySelector('.catalog-section').offsetTop - 100, behavior: 'smooth' });
+                scrollToTarget();
             }
         });
         container.appendChild(nextBtn);
     }
 
     // Filter Logic
-    // Filter Logic
     function applyFilters() {
         // Reset to page 1 on filter change
         currentPage = 1;
 
-        const activeCatBtn = document.querySelector('#category-filters button.active');
+        const activeCatBtn = document.querySelector('#quick-pills button.active') || document.querySelector('#category-filters button.active');
         const activeBrandBtn = document.querySelector('#brand-filters button.active');
         const searchInput = document.getElementById('product-search');
-        const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+        const searchQuery = searchInput ? normalizeFilterText(searchInput.value) : '';
 
         // Category Filter Logic
         let allowedCategories = ['all'];
 
         if (activeCatBtn) {
-            // Check if it's a group (data-group) or single filter (data-filter)
             if (activeCatBtn.dataset.group) {
-                // It's a group, allow any category in the list
                 allowedCategories = activeCatBtn.dataset.group.split(',');
             } else {
-                // It's a single category
                 allowedCategories = [activeCatBtn.dataset.filter || 'all'];
             }
         }
@@ -244,28 +320,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeBrand = activeBrandBtn ? activeBrandBtn.dataset.brand : 'all';
 
         currentFiltered = allProducts.filter(p => {
-            // Category Match
             let catMatch = false;
             if (allowedCategories.includes('all')) {
                 catMatch = true;
             } else {
-                // If product category is in the allowed list
                 if (allowedCategories.includes(p.category)) {
                     catMatch = true;
                 }
-                // Backward Compatibility Mapping
-                // If product has old 'care' category but we are looking for 'shampoo', we might miss it.
-                // But if we are filtering by GROUP 'care,shampoo,etc', then old 'care' items will show up naturally if 'care' is in the group string.
-                // The updated HTML details include 'care' in the "Saç Bakım" group string, so legacy items work fine.
             }
 
-            // Brand Match
-            const brandMatch = activeBrand === 'all' || p.brand === activeBrand;
+            const brandMatch = activeBrand === 'all' ||
+                canonicalBrandKey(p.brand, p.name) === canonicalBrandKey(activeBrand);
 
-            // Search Match
             let searchMatch = true;
             if (searchQuery) {
-                const combinedText = `${p.name} ${p.brand} ${p.description || ''}`.toLowerCase();
+                const combinedText = normalizeFilterText(`${p.name} ${p.brand} ${p.description || ''}`);
                 searchMatch = combinedText.includes(searchQuery);
             }
 
@@ -275,26 +344,48 @@ document.addEventListener('DOMContentLoaded', () => {
         renderProducts();
     }
 
-    // Event Listeners for Filters
-    // Note: We use event delegation or select all potential buttons
+    // Event Listeners for Filters (#category-filters, #brand-filters, and #quick-pills)
     const categoryButtons = document.querySelectorAll('#category-filters button');
     const brandButtons = document.querySelectorAll('#brand-filters button');
+    const quickPills = document.querySelectorAll('#quick-pills button');
 
-    [...categoryButtons, ...brandButtons].forEach(btn => {
+    [...categoryButtons, ...brandButtons, ...quickPills].forEach(btn => {
         btn.addEventListener('click', (e) => {
-            // Remove active from all buttons in this filter container
-            // For nested tree, we need to be careful to deselect everything in #category-filters
-            const container = e.target.closest('#category-filters') || e.target.closest('#brand-filters');
-
-            // If clicking a group header that is NOT a filter button itself (some designs have headers as buttons)
-            // In our HTML, headers have data-group, children have data-filter. Both are buttons.
+            const container = e.target.closest('#category-filters') || e.target.closest('#brand-filters') || e.target.closest('#quick-pills');
 
             if (container) {
                 container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
             }
 
+            // If quick pills clicked, clear category sidebar selection so they don't conflict
+            if (e.target.closest('#quick-pills')) {
+                document.querySelectorAll('#category-filters button').forEach(b => b.classList.remove('active'));
+            }
+            // If category sidebar clicked, clear quick pills selection
+            if (e.target.closest('#category-filters')) {
+                document.querySelectorAll('#quick-pills button').forEach(b => b.classList.remove('active'));
+            }
+
             e.target.classList.add('active');
             applyFilters();
+
+            // Uzun ürün listesinden kısa/boş bir sonuca geçildiğinde içerik ekranın
+            // üzerinde kalmasın. Mobil filtre çekmecesini de seçimden sonra kapat.
+            const openSidebar = document.getElementById('product-sidebar');
+            if (openSidebar && openSidebar.classList.contains('active')) {
+                openSidebar.classList.remove('active');
+                const filterButton = document.getElementById('filter-toggle');
+                if (filterButton) filterButton.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+
+            requestAnimationFrame(() => {
+                const catalogContent = document.querySelector('.catalog-content');
+                if (!catalogContent) return;
+
+                const targetTop = catalogContent.getBoundingClientRect().top + window.scrollY - 100;
+                window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+            });
         });
     });
 
@@ -309,6 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filterToggleBtn && productSidebar) {
         filterToggleBtn.addEventListener('click', () => {
             productSidebar.classList.add('active');
+            filterToggleBtn.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden';
         });
     }
@@ -316,16 +408,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeSidebarBtn) {
         closeSidebarBtn.addEventListener('click', () => {
             productSidebar.classList.remove('active');
+            if (filterToggleBtn) filterToggleBtn.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         });
     }
 
-    // Close when clicking outside (optional)
+    // Close the product filter panel when the user clicks outside it.
     document.addEventListener('click', (e) => {
-        if (productSidebar.classList.contains('active') &&
+        if (productSidebar && productSidebar.classList.contains('active') &&
             !productSidebar.contains(e.target) &&
-            !filterToggleBtn.contains(e.target)) {
+            filterToggleBtn && !filterToggleBtn.contains(e.target)) {
             productSidebar.classList.remove('active');
+            filterToggleBtn.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         }
     });
@@ -369,6 +463,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            document.title = `${product.name} | Bakır Cosmetic`;
+            const metaDescription = document.querySelector('meta[name="description"]');
+            if (metaDescription) {
+                const description = product.description || `${product.name} hakkında ürün bilgileri.`;
+                metaDescription.setAttribute('content', description.slice(0, 155));
+            }
+
             // Render Detail with Gallery Support
             let galleryHtml = '';
             if (product.gallery && product.gallery.length > 0) {
@@ -395,10 +496,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h1 class="d-title">${product.name}</h1>
 
                     <p class="d-desc">${product.description}</p>
-                    
+
                     <div class="d-actions">
-                        <a href="https://wa.me/905321750818?text=Merhaba, ${product.name} hakkında bilgi almak istiyorum." target="_blank" class="btn btn-copper">
-                            <i class="fa-brands fa-whatsapp"></i> SiPARİŞ HATTI
+                        <a href="https://wa.me/905321750818?text=${encodeURIComponent(`Merhaba, ${product.name} hakkında bilgi almak istiyorum.`)}" target="_blank" rel="noopener noreferrer" class="btn btn-copper">
+                            <i class="fa-brands fa-whatsapp"></i> SİPARİŞ HATTI
                         </a>
                     </div>
                 </div>
@@ -418,7 +519,11 @@ document.addEventListener('DOMContentLoaded', () => {
         burger.addEventListener('click', () => {
             burger.classList.toggle('active');
             overlay.classList.toggle('active');
-            document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
+            const isOpen = overlay.classList.contains('active');
+            burger.setAttribute('aria-expanded', String(isOpen));
+            burger.setAttribute('aria-label', isOpen ? 'Menüyü kapat' : 'Menüyü aç');
+            overlay.setAttribute('aria-hidden', String(!isOpen));
+            document.body.style.overflow = isOpen ? 'hidden' : '';
         });
 
         // Close menu/link logic
@@ -427,20 +532,22 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', () => {
                 burger.classList.remove('active');
                 overlay.classList.remove('active');
+                burger.setAttribute('aria-expanded', 'false');
+                burger.setAttribute('aria-label', 'Menüyü aç');
+                overlay.setAttribute('aria-hidden', 'true');
                 document.body.style.overflow = '';
             });
         });
-    }
 
-    // --- Contact Form Handling (Local vs Production) ---
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
-            // Check if running locally
-            if (window.location.protocol === 'file:') {
-                e.preventDefault();
-                alert('⚠️ Test Modu (Dosya Üzerinden Çalışıyor):\n\nBu form güvenliği nedeniyle sadece gerçek bir web sitesine (domain) yüklendiğinde mail gönderir.\n\nŞu an sadece "Görünüm" ve "Sayfa Yönlendirmesini" test ediyorsunuz. Sitenizi yayınladığınızda mail sistemi otomatik devreye girecektir.');
-                window.location.href = 'thank-you.html'; // Simulate success
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && overlay.classList.contains('active')) {
+                burger.classList.remove('active');
+                overlay.classList.remove('active');
+                burger.setAttribute('aria-expanded', 'false');
+                burger.setAttribute('aria-label', 'Menüyü aç');
+                overlay.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                burger.focus();
             }
         });
     }
@@ -471,44 +578,51 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!window.matchMedia("(pointer: fine)").matches) return;
 
         const cards = document.querySelectorAll('.product-card:not(.tilt-init)');
-        
+
         cards.forEach(card => {
             card.classList.add('tilt-init');
             let targetX = 0, targetY = 0;
             let currentX = 0, currentY = 0;
             let isHovering = false;
-            let requestRef;
+            let requestRef = null;
+            let cachedRect = null;
 
             const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
 
             const animateTilt = () => {
-                if (!isHovering && Math.abs(currentX) < 0.1 && Math.abs(currentY) < 0.1) {
-                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                if (!isHovering && Math.abs(currentX) < 0.05 && Math.abs(currentY) < 0.05) {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateZ(0)`;
                     cancelAnimationFrame(requestRef);
                     requestRef = null;
                     return;
                 }
 
-                currentX = lerp(currentX, targetX, 0.1);
-                currentY = lerp(currentY, targetY, 0.1);
+                currentX = lerp(currentX, targetX, 0.12);
+                currentY = lerp(currentY, targetY, 0.12);
 
-                const scale = isHovering ? lerp(1, 1.02, 0.1) : lerp(1.02, 1, 0.1);
+                const scale = isHovering ? lerp(1, 1.02, 0.12) : lerp(1.02, 1, 0.12);
 
-                card.style.transform = `perspective(1000px) rotateX(${currentX}deg) rotateY(${currentY}deg) scale3d(${scale}, ${scale}, ${scale})`;
-                
+                card.style.transform = `perspective(1000px) rotateX(${currentX.toFixed(2)}deg) rotateY(${currentY.toFixed(2)}deg) scale3d(${scale.toFixed(3)}, ${scale.toFixed(3)}, 1) translateZ(0)`;
+
                 requestRef = requestAnimationFrame(animateTilt);
             };
 
+            card.addEventListener('mouseenter', () => {
+                cachedRect = card.getBoundingClientRect();
+                isHovering = true;
+                if (!requestRef) requestRef = requestAnimationFrame(animateTilt);
+            });
+
             card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                if (!cachedRect) cachedRect = card.getBoundingClientRect();
+                const x = e.clientX - cachedRect.left;
+                const y = e.clientY - cachedRect.top;
 
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
+                const centerX = cachedRect.width / 2;
+                const centerY = cachedRect.height / 2;
 
-                targetX = ((y - centerY) / centerY) * 10;
-                targetY = ((centerX - x) / centerX) * 10;
+                targetX = ((y - centerY) / centerY) * 7;
+                targetY = ((centerX - x) / centerX) * 7;
 
                 isHovering = true;
                 if (!requestRef) requestRef = requestAnimationFrame(animateTilt);
@@ -518,8 +632,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 targetX = 0;
                 targetY = 0;
                 isHovering = false;
+                cachedRect = null;
             });
         });
+    }
+
+    // Initialize page-specific product views without inline scripts.
+    if (document.getElementById('product-container')) {
+        window.initProductCatalog();
+    }
+
+    if (document.getElementById('product-detail-container')) {
+        window.initProductDetail();
     }
 
     // Call observeCards for static sections if any
@@ -527,12 +651,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initTilt();
 
 });
-
-// Global Helper (optional)
-window.openProductModal = (id) => {
-    // Legacy support or remove
-    window.location.href = `product-detail.html?id=${id}`;
-};
 
 window.changeMainImage = (src, thumbElement) => {
     const mainImg = document.getElementById('main-product-img');
@@ -605,4 +723,18 @@ function initStats() {
 // Stats initialization
 document.addEventListener('DOMContentLoaded', () => {
     initStats();
+
+    // --- Mobile Fixed Contact Bar ---
+    if (!document.querySelector('.mobile-contact-bar')) {
+        document.body.insertAdjacentHTML('beforeend', `
+            <nav class="mobile-contact-bar" aria-label="Hızlı iletişim">
+                <a href="https://wa.me/905321750818" target="_blank" rel="noopener noreferrer" class="mobile-contact-whatsapp" aria-label="WhatsApp ile iletişime geç" title="WhatsApp">
+                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                </a>
+                <a href="tel:+905321750818" class="mobile-contact-call" aria-label="Bakır Cosmetic'i ara" title="Ara">
+                    <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                </a>
+            </nav>`);
+    }
+
 });

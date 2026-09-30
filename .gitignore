@@ -1,0 +1,10 @@
+.codex-backups/
+.vscode/
+test_ibb.html
+test_ibb.js
+raw_text.txt
+parsed_products.json
+__pycache__/
+*.pyc
+.codex-tools/
+

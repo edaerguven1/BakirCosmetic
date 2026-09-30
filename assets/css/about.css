@@ -1,0 +1,565 @@
+/* ═══════════════════════════════════════
+           ANIMATED GRADIENT HERO
+        ═══════════════════════════════════════ */
+        .gradient-hero {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            overflow: hidden;
+            background: #080808;
+            margin-top: 80px;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gradient-hero .hero-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            pointer-events: none;
+            text-align: center;
+            max-width: none !important;
+        }
+
+        .gradient-hero .hero-label {
+            display: block;
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 11px;
+            letter-spacing: 6px;
+            color: rgba(200, 130, 26, 0.8);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0;
+            text-align: center;
+            animation: heroFadeUp 0.9s ease 0.2s forwards;
+        }
+
+        .gradient-hero .hero-title {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: clamp(36px, 6vw, 72px);
+            color: #fff;
+            font-weight: 400;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            line-height: 1;
+            opacity: 0;
+            text-align: center;
+            animation: heroFadeUp 0.9s ease 0.45s forwards;
+        }
+
+        .gradient-hero .hero-line {
+            width: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(200, 130, 26, 0.6), transparent);
+            margin: 20px auto;
+            animation: heroLineGrow 1s ease 0.9s forwards;
+        }
+
+        .gradient-hero .hero-sub {
+            font-family: var(--font-body, 'Manrope', sans-serif);
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            opacity: 0;
+            text-align: center;
+            animation: heroFadeUp 0.9s ease 1s forwards;
+        }
+
+        @keyframes heroFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heroLineGrow {
+            to {
+                width: 140px;
+            }
+        }
+
+        /* ═══════════════════════════════════════
+           NEDEN BAKIR — 4 KART
+        ═══════════════════════════════════════ */
+        .why-section {
+            padding: 110px 0;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(200, 130, 26, 0.3), transparent);
+        }
+
+        .why-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(200, 130, 26, 0.3), transparent);
+        }
+
+        .why-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .why-header .label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 5px;
+            color: #c8821a;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .why-header h2 {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 2.4rem;
+            color: #fff;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+        }
+
+        /* Her kart */
+        .why-card {
+            position: relative;
+            padding: 50px 36px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: center;
+            overflow: hidden;
+            cursor: default;
+            /* reveal için */
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease,
+                background 0.4s ease, border-color 0.4s ease;
+        }
+
+        .why-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .why-card:nth-child(1) {
+            transition-delay: 0s;
+        }
+
+        .why-card:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+
+        .why-card:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        .why-card:nth-child(4) {
+            transition-delay: 0.3s;
+        }
+
+        .why-card:hover {
+            background: rgba(200, 130, 26, 0.05);
+            border-color: rgba(200, 130, 26, 0.25);
+        }
+
+        /* Köşe süsü */
+        .why-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-top: 2px solid #c8821a;
+            border-left: 2px solid #c8821a;
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .why-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 2px solid #c8821a;
+            border-right: 2px solid #c8821a;
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .why-card:hover::before,
+        .why-card:hover::after {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* İkon */
+        .why-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 28px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .why-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(200, 130, 26, 0.25);
+            transition: border-color 0.4s, transform 0.4s;
+        }
+
+        .why-card:hover .why-icon::before {
+            border-color: rgba(200, 130, 26, 0.6);
+            transform: scale(1.12);
+        }
+
+        .why-icon i {
+            font-size: 1.6rem;
+            color: #c8821a;
+            transition: transform 0.4s ease;
+        }
+
+        .why-card:hover .why-icon i {
+            transform: scale(1.15);
+        }
+
+        /* Sayı */
+        .why-number {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 2.6rem;
+            color: #c8821a;
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 6px;
+            letter-spacing: -1px;
+        }
+
+        .why-title {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+
+        /* İnce çizgi */
+        .why-line {
+            width: 24px;
+            height: 1px;
+            background: #c8821a;
+            margin: 0 auto 18px;
+            transition: width 0.4s ease;
+        }
+
+        .why-card:hover .why-line {
+            width: 48px;
+        }
+
+        .why-desc {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.68);
+            line-height: 1.7;
+        }
+
+        /* ═══════════════════════════════════════
+           MARKA DUVARI
+        ═══════════════════════════════════════ */
+        .brands-section {
+            padding: 100px 0;
+            background: #080808;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brands-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .brands-header .label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 5px;
+            color: #c8821a;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .brands-header h2 {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 2rem;
+            color: #fff;
+            font-weight: 400;
+        }
+
+        .brands-header p {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 0.9rem;
+            margin-top: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* Marka grid */
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+        }
+
+        .brand-item {
+            position: relative;
+            padding: 42px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: default;
+            overflow: hidden;
+            /* reveal */
+            opacity: 0;
+            transform: scale(0.94);
+            transition: opacity 0.6s ease, transform 0.6s ease,
+                background 0.35s ease, border-color 0.35s ease;
+        }
+
+        .brand-item.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .brand-item:nth-child(1) {
+            transition-delay: 0s;
+        }
+
+        .brand-item:nth-child(2) {
+            transition-delay: 0.07s;
+        }
+
+        .brand-item:nth-child(3) {
+            transition-delay: 0.14s;
+        }
+
+        .brand-item:nth-child(4) {
+            transition-delay: 0.21s;
+        }
+
+        .brand-item:nth-child(5) {
+            transition-delay: 0.28s;
+        }
+
+        .brand-item:nth-child(6) {
+            transition-delay: 0.35s;
+        }
+
+        .brand-item:nth-child(7) {
+            transition-delay: 0.42s;
+        }
+
+        .brand-item:nth-child(8) {
+            transition-delay: 0.49s;
+        }
+
+        /* Hover arka plan ışığı */
+        .brand-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(200, 130, 26, 0.08), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .brand-item:hover {
+            border-color: rgba(200, 130, 26, 0.2);
+            background: rgba(200, 130, 26, 0.03);
+        }
+
+        .brand-item:hover::before {
+            opacity: 1;
+        }
+
+        /* Marka adı */
+        .brand-name {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 1.05rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+            transition: color 0.35s ease, letter-spacing 0.35s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-item:hover .brand-name {
+            color: rgba(200, 130, 26, 0.85);
+            letter-spacing: 5px;
+        }
+
+        /* Kategori etiketi */
+        .brand-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: rgba(200, 130, 26, 0);
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: color 0.35s ease;
+        }
+
+        .brand-item:hover .brand-tag {
+            color: rgba(200, 130, 26, 0.5);
+        }
+
+        /* ═══════════════════════════════════════
+           VİZYON / MİSYON — FLIP KART
+        ═══════════════════════════════════════ */
+        .vm-card {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .vm-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
+            transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+
+        .vm-card:hover .vm-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .vm-front,
+        .vm-back {
+            position: absolute;
+            inset: 0;
+            padding: 50px;
+            text-align: center;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background: var(--color-surface, #111);
+            border: 1px solid var(--color-border, rgba(255, 255, 255, 0.08));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vm-back {
+            transform: rotateY(180deg);
+            background: rgba(200, 130, 26, 0.08);
+            border-color: rgba(200, 130, 26, 0.3);
+        }
+
+        .vm-front i {
+            font-size: 2.8rem;
+            color: #c8821a;
+            margin-bottom: 22px;
+        }
+
+        .vm-front h3 {
+            font-size: 1.4rem;
+            color: #fff;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .vm-front p {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .vm-back p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            font-size: 0.9rem;
+        }
+
+        /* ═══════════════════════════════════════
+           HİKAYE — PARALLAX + REVEAL
+        ═══════════════════════════════════════ */
+        .story-reveal {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .story-reveal.right {
+            transform: translateX(30px);
+        }
+
+        .story-reveal.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .why-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .brands-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 540px) {
+            .why-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .brands-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .why-number {
+                font-size: 2rem;
+            }
+        }
